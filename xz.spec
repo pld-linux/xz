@@ -7,7 +7,6 @@ License:	LGPL
 Group:		Applications/Archiving
 Source0:	http://www.7-zip.org/dl/%{name}406.zip
 # Source0-md5:	a09378411cba5f786b5c49c9c58496df
-# Source0-size:	185934
 Patch0:		%{name}-quiet.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	libstdc++-devel
