@@ -2,7 +2,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.06
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Applications/Archiving
 Source0:	http://www.7-zip.org/dl/%{name}406.zip
@@ -11,6 +11,7 @@ Source0:	http://www.7-zip.org/dl/%{name}406.zip
 Patch0:		%{name}-quiet.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	libstdc++-devel
+BuildRequires:	gcc >= 5:3.4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -55,8 +56,22 @@ Cechy LZMA:
 cd SRC/7zip/Compress/LZMA_Alone
 %{__make} \
 	CXX="%{__cxx}" \
-	CFLAGS="%{rpmcflags} -c" \
-	LDFLAGS="%{rpmldflags}"
+	CFLAGS="%{rpmcflags} -fprofile-arcs -c" \
+	LDFLAGS="%{rpmldflags} -fprofile-arcs"
+
+cat ../LZMA/* > test1
+cat lzma *.o > test2
+./lzma e test1 test3
+./lzma e test2 test4
+./lzma d test3 test5
+./lzma d test4 test6
+
+%{__make} clean
+
+%{__make} \
+	CXX="%{__cxx}" \
+	CFLAGS="%{rpmcflags} -fprofile-use -c" \
+	LDFLAGS="%{rpmldflags} -fprofile-use"
 
 %install
 rm -rf $RPM_BUILD_ROOT
