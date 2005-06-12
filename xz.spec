@@ -55,8 +55,9 @@ Cechy LZMA:
 cd SRC/7zip/Compress/LZMA_Alone
 %{__make} \
 	CXX="%{__cxx}" \
-	CFLAGS="%{rpmcflags} -fprofile-arcs -c" \
-	LDFLAGS="%{rpmldflags} -fprofile-arcs"
+	CFLAGS="%{rpmcflags} -fprofile-generate -c" \
+	LDFLAGS="%{rpmldflags}" \
+	LIB="-lm -lgcov"
 
 cat ../LZMA/* > test1
 cat lzma *.o > test2
@@ -70,7 +71,7 @@ cat lzma *.o > test2
 %{__make} \
 	CXX="%{__cxx}" \
 	CFLAGS="%{rpmcflags} -fprofile-use -c" \
-	LDFLAGS="%{rpmldflags} -fprofile-use"
+	LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
