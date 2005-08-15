@@ -1,12 +1,12 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.22
+Version:	4.27
 Release:	1
 License:	LGPL
 Group:		Applications/Archiving
-Source0:	http://www.7-zip.org/dl/%{name}422.tar.bz2
-# Source0-md5:	322422f93955d3ad4223d1daf4702148
+Source0:	http://dl.sourceforge.net/sevenzip/%{name}427.tar.bz2
+# Source0-md5:	8e99976772e28c6fa3c5d9a2fb82ca50
 Patch0:		%{name}-quiet.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	libstdc++-devel
@@ -53,7 +53,8 @@ Cechy LZMA:
 
 %build
 cd SRC/7zip/Compress/LZMA_Alone
-%{__make} \
+
+%{__make} -f makefile.gcc
 	CXX="%{__cxx}" \
 	CFLAGS="%{rpmcflags} -fprofile-generate -c -I ../../.." \
 	LDFLAGS="%{rpmldflags}" \
@@ -66,9 +67,9 @@ cat lzma *.o > test2
 ./lzma d test3 test5
 ./lzma d test4 test6
 
-%{__make} clean
+%{__make} -f makefile.gcc clean
 
-%{__make} \
+%{__make} -f makefile.gcc \
 	CXX="%{__cxx}" \
 	CFLAGS="%{rpmcflags} -fprofile-use -c -I ../../.." \
 	LDFLAGS="%{rpmldflags}"

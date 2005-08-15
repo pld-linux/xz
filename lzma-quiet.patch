@@ -1,15 +1,15 @@
 diff -ruN lzma-4.22./SRC/7zip/Compress/LZMA_Alone/LzmaAlone.cpp lzma-4.22/SRC/7zip/Compress/LZMA_Alone/LzmaAlone.cpp
 --- lzma-4.22./SRC/7zip/Compress/LZMA_Alone/LzmaAlone.cpp	2005-07-16 12:10:20.000000000 +0200
 +++ lzma-4.22/SRC/7zip/Compress/LZMA_Alone/LzmaAlone.cpp	2005-07-16 12:11:23.922099432 +0200
-@@ -131,10 +131,9 @@
+@@ -131,10 +131,10 @@
  
  int main2(int n, const char *args[])
  {
--  fprintf(stderr, "\nLZMA 4.21 Copyright (c) 1999-2005 Igor Pavlov  2005-06-08\n");
--
+-  fprintf(stderr, "\nLZMA 4.27 Copyright (c) 1999-2005 Igor Pavlov  2005-08-07\n");
+ 
    if (n == 1)
    {
-+    fprintf(stderr, "\nLZMA 4.21 Copyright (c) 1999-2005 Igor Pavlov  2005-06-08\n");
++    fprintf(stderr, "\nLZMA 4.27 Copyright (c) 1999-2005 Igor Pavlov  2005-08-07\n");
      PrintHelp();
      return 0;
    }
