@@ -8,6 +8,7 @@ Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/sevenzip/%{name}427.tar.bz2
 # Source0-md5:	8e99976772e28c6fa3c5d9a2fb82ca50
 Patch0:		%{name}-quiet.patch
+Patch1:		%{name}427_zlib.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	libstdc++-devel
 BuildRequires:	gcc >= 5:3.4.0
@@ -47,9 +48,17 @@ Cechy LZMA:
 - Ma³y rozmiar kodu dekompresuj±cego: 2-8 KB (w zale¿no¶ci od opcji
   optymalizacji).
 
+%package devel
+Summary:        LZMA Library
+Group:          Development/Libraries
+
+%description devel
+LZMA Library
+
 %prep
 %setup -q -c
 %patch0 -p1
+%patch1 -p1
 
 %build
 cd SRC/7zip/Compress/LZMA_Alone
@@ -74,11 +83,15 @@ cat lzma *.o > test2
 	CFLAGS="%{rpmcflags} -fprofile-use -c -I ../../.." \
 	LDFLAGS="%{rpmldflags}"
 
+cd ../LZMA_Lib
+%{__make}
+
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_bindir}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}}
 
 install SRC/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
+install SRC/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -87,3 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc history.txt lzma.txt
 %attr(755,root,root) %{_bindir}/*
+
+%files devel
+%defattr(644,root,root,755)
+%{_libdir}/liblzma.a
