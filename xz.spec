@@ -10,8 +10,8 @@ Source0:	http://dl.sourceforge.net/sevenzip/%{name}427.tar.bz2
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
 URL:		http://www.7-zip.org/sdk.html
-BuildRequires:	libstdc++-devel
 BuildRequires:	gcc >= 5:3.4.0
+BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -49,11 +49,15 @@ Cechy LZMA:
   optymalizacji).
 
 %package devel
-Summary:        LZMA Library
+Summary:        LZMA library
+Summary(pl):	Biblioteka LZMA
 Group:          Development/Libraries
 
 %description devel
-LZMA Library
+LZMA Library.
+
+%description devel -l pl
+Biblioteka LZMA.
 
 %prep
 %setup -q -c
