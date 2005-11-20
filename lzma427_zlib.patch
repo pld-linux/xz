@@ -1,6 +1,6 @@
-diff -ruN lzma427.orig/SRC/7zip/Compress/LZMA_Lib/makefile lzma427.mod/SRC/7zip/Compress/LZMA_Lib/makefile
---- lzma427.orig/SRC/7zip/Compress/LZMA_Lib/makefile	1970-01-01 09:30:00.000000000 +0930
-+++ lzma427.mod/SRC/7zip/Compress/LZMA_Lib/makefile	2005-08-20 22:45:31.000000000 +0930
+diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/makefile lzma427.mod/C/7zip/Compress/LZMA_Lib/makefile
+--- lzma427.orig/C/7zip/Compress/LZMA_Lib/makefile	1970-01-01 09:30:00.000000000 +0930
++++ lzma427.mod/C/7zip/Compress/LZMA_Lib/makefile	2005-08-20 22:45:31.000000000 +0930
 @@ -0,0 +1,88 @@
 +PROG = liblzma.a
 +CXX = g++ -O3 -Wall
@@ -90,9 +90,9 @@ diff -ruN lzma427.orig/SRC/7zip/Compress/LZMA_Lib/makefile lzma427.mod/SRC/7zip/
 +clean:
 +	-$(RM) $(PROG) $(OBJS)
 +
-diff -ruN lzma427.orig/SRC/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/SRC/7zip/Compress/LZMA_Lib/ZLib.cpp
---- lzma427.orig/SRC/7zip/Compress/LZMA_Lib/ZLib.cpp	1970-01-01 09:30:00.000000000 +0930
-+++ lzma427.mod/SRC/7zip/Compress/LZMA_Lib/ZLib.cpp	2005-08-20 23:00:33.000000000 +0930
+diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Compress/LZMA_Lib/ZLib.cpp
+--- lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp	1970-01-01 09:30:00.000000000 +0930
++++ lzma427.mod/C/7zip/Compress/LZMA_Lib/ZLib.cpp	2005-08-20 23:00:33.000000000 +0930
 @@ -0,0 +1,283 @@
 +/*
 + * lzma zlib simplified wrapper
@@ -377,9 +377,9 @@ diff -ruN lzma427.orig/SRC/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/SRC/7zip/
 +	
 +	return Z_OK;
 +}
-diff -ruN lzma427.orig/SRC/Common/CommandLineParser.h lzma427.mod/SRC/Common/CommandLineParser.h
---- lzma427.orig/SRC/Common/CommandLineParser.h	2005-03-08 01:33:46.000000000 +1030
-+++ lzma427.mod/SRC/Common/CommandLineParser.h	2005-08-20 22:52:04.000000000 +0930
+diff -ruN lzma427.orig/C/Common/CommandLineParser.h lzma427.mod/C/Common/CommandLineParser.h
+--- lzma427.orig/C/Common/CommandLineParser.h	2005-03-08 01:33:46.000000000 +1030
++++ lzma427.mod/C/Common/CommandLineParser.h	2005-08-20 22:52:04.000000000 +0930
 @@ -3,7 +3,7 @@
  #ifndef __COMMON_COMMANDLINEPARSER_H
  #define __COMMON_COMMANDLINEPARSER_H
@@ -389,9 +389,9 @@ diff -ruN lzma427.orig/SRC/Common/CommandLineParser.h lzma427.mod/SRC/Common/Com
  
  namespace NCommandLineParser {
  
-diff -ruN lzma427.orig/SRC/Common/StringConvert.h lzma427.mod/SRC/Common/StringConvert.h
---- lzma427.orig/SRC/Common/StringConvert.h	2005-03-08 01:34:24.000000000 +1030
-+++ lzma427.mod/SRC/Common/StringConvert.h	2005-08-20 22:53:38.000000000 +0930
+diff -ruN lzma427.orig/C/Common/StringConvert.h lzma427.mod/C/Common/StringConvert.h
+--- lzma427.orig/C/Common/StringConvert.h	2005-03-08 01:34:24.000000000 +1030
++++ lzma427.mod/C/Common/StringConvert.h	2005-08-20 22:53:38.000000000 +0930
 @@ -4,7 +4,7 @@
  #define __COMMON_STRINGCONVERT_H
  
@@ -401,9 +401,9 @@ diff -ruN lzma427.orig/SRC/Common/StringConvert.h lzma427.mod/SRC/Common/StringC
  #include "Types.h"
  
  UString MultiByteToUnicodeString(const AString &srcString, UINT codePage = CP_ACP);
-diff -ruN lzma427.orig/SRC/Common/String.cpp lzma427.mod/SRC/Common/String.cpp
---- lzma427.orig/SRC/Common/String.cpp	2005-03-08 01:33:46.000000000 +1030
-+++ lzma427.mod/SRC/Common/String.cpp	2005-08-20 22:53:19.000000000 +0930
+diff -ruN lzma427.orig/C/Common/String.cpp lzma427.mod/C/Common/String.cpp
+--- lzma427.orig/C/Common/String.cpp	2005-03-08 01:33:46.000000000 +1030
++++ lzma427.mod/C/Common/String.cpp	2005-08-20 22:53:19.000000000 +0930
 @@ -8,7 +8,7 @@
  #include <ctype.h>
  #endif

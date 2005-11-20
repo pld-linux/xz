@@ -1,15 +1,15 @@
 diff -ruN lzma-4.22./SRC/7zip/Compress/LZMA_Alone/LzmaAlone.cpp lzma-4.22/SRC/7zip/Compress/LZMA_Alone/LzmaAlone.cpp
---- lzma-4.22./SRC/7zip/Compress/LZMA_Alone/LzmaAlone.cpp	2005-07-16 12:10:20.000000000 +0200
-+++ lzma-4.22/SRC/7zip/Compress/LZMA_Alone/LzmaAlone.cpp	2005-07-16 12:11:23.922099432 +0200
-@@ -131,10 +131,10 @@
+--- lzma-4.22./C/7zip/Compress/LZMA_Alone/LzmaAlone.cpp	2005-07-16 12:10:20.000000000 +0200
++++ lzma-4.22/C/7zip/Compress/LZMA_Alone/LzmaAlone.cpp	2005-07-16 12:11:23.922099432 +0200
+@@ -150,10 +150,10 @@
+   g_IsNT = IsItWindowsNT();
+   #endif
  
- int main2(int n, const char *args[])
- {
--  fprintf(stderr, "\nLZMA 4.27 Copyright (c) 1999-2005 Igor Pavlov  2005-08-07\n");
+-  fprintf(stderr, "\nLZMA 4.30 Copyright (c) 1999-2005 Igor Pavlov  2005-11-20\n");
  
    if (n == 1)
    {
-+    fprintf(stderr, "\nLZMA 4.27 Copyright (c) 1999-2005 Igor Pavlov  2005-08-07\n");
++    fprintf(stderr, "\nLZMA 4.30 Copyright (c) 1999-2005 Igor Pavlov  2005-11-20\n");
      PrintHelp();
      return 0;
    }

@@ -1,12 +1,12 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.27
+Version:	4.30
 Release:	1
 License:	LGPL
 Group:		Applications/Archiving
-Source0:	http://dl.sourceforge.net/sevenzip/%{name}427.tar.bz2
-# Source0-md5:	8e99976772e28c6fa3c5d9a2fb82ca50
+Source0:	http://dl.sourceforge.net/sevenzip/%{name}430.tar.bz2
+# Source0-md5:	d29dd544ef1face2002ad9ce32c93501
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
 URL:		http://www.7-zip.org/sdk.html
@@ -65,8 +65,7 @@ Biblioteka LZMA.
 %patch1 -p1
 
 %build
-cd SRC/7zip/Compress/LZMA_Alone
-
+cd C/7zip/Compress/LZMA_Alone
 %{__make} -f makefile.gcc
 	CXX="%{__cxx}" \
 	CFLAGS="%{rpmcflags} -fprofile-generate -c -I ../../.." \
@@ -94,8 +93,8 @@ cd ../LZMA_Lib
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}}
 
-install SRC/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
-install SRC/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
+install C/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
+install C/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
