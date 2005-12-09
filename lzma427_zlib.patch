@@ -18,6 +18,7 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/makefile lzma427.mod/C/7zip/Comp
 +  InBuffer.o \
 +  OutBuffer.o \
 +  FileStreams.o \
++  StreamUtils.o \
 +  Alloc.o \
 +  C_FileIO.o \
 +  CommandLineParser.o \
@@ -59,6 +60,9 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/makefile lzma427.mod/C/7zip/Comp
 +
 +FileStreams.o: ../../Common/FileStreams.cpp
 +	$(CXX) $(CFLAGS) ../../Common/FileStreams.cpp
++
++StreamUtils.o: ../../Common/StreamUtils.cpp
++	$(CXX) $(CFLAGS) ../../Common/StreamUtils.cpp
 +
 +Alloc.o: ../../../Common/Alloc.cpp
 +	$(CXX) $(CFLAGS) ../../../Common/Alloc.cpp
