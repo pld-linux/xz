@@ -82,15 +82,18 @@ cat lzma *.o > test2
 cmp test1 test5
 cmp test2 test6
 
-%{__make} -f makefile clean
+%{__make} -f makefile.gcc clean
 
-%{__make} -f makefile \
+%{__make} -f makefile.gcc \
 	CXX="%{__cxx}" \
+	CXX_C="%{__cc}" \
 	CFLAGS="%{rpmcflags} -fprofile-use -c -I ../../.." \
 	LDFLAGS="%{rpmldflags}"
 
 cd ../LZMA_Lib
-%{__make}
+%{__make} -f makefile \
+	CXX="%{__cxx}" \
+	CFLAGS="%{rpmcflags} -c"
 
 %install
 rm -rf $RPM_BUILD_ROOT
