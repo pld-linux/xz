@@ -2,8 +2,8 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.30
-Release:	1
-License:	LGPL
+Release:	2
+License:	CPL/LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/sevenzip/%{name}430.tar.bz2
 # Source0-md5:	d29dd544ef1face2002ad9ce32c93501
