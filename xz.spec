@@ -66,8 +66,9 @@ Biblioteka LZMA.
 
 %build
 cd C/7zip/Compress/LZMA_Alone
-%{__make} -f makefile.gcc
+%{__make} -f makefile.gcc \
 	CXX="%{__cxx}" \
+	CXX_C="%{__cc}" \
 	CFLAGS="%{rpmcflags} -fprofile-generate -c -I ../../.." \
 	LDFLAGS="%{rpmldflags}" \
 	LIB="-lm -lgcov"
@@ -78,10 +79,12 @@ cat lzma *.o > test2
 ./lzma e test2 test4
 ./lzma d test3 test5
 ./lzma d test4 test6
+cmp test1 test5
+cmp test2 test6
 
-%{__make} -f makefile.gcc clean
+%{__make} -f makefile clean
 
-%{__make} -f makefile.gcc \
+%{__make} -f makefile \
 	CXX="%{__cxx}" \
 	CFLAGS="%{rpmcflags} -fprofile-use -c -I ../../.." \
 	LDFLAGS="%{rpmldflags}"
