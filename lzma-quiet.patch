@@ -5,11 +5,11 @@ diff -ruN lzma-4.22./SRC/7zip/Compress/LZMA_Alone/LzmaAlone.cpp lzma-4.22/SRC/7z
    g_IsNT = IsItWindowsNT();
    #endif
  
--  fprintf(stderr, "\nLZMA 4.30 Copyright (c) 1999-2005 Igor Pavlov  2005-11-20\n");
+-  fprintf(stderr, "\nLZMA 4.40 Copyright (c) 1999-2006 Igor Pavlov  2006-05-01\n");
  
    if (n == 1)
    {
-+    fprintf(stderr, "\nLZMA 4.30 Copyright (c) 1999-2005 Igor Pavlov  2005-11-20\n");
++    fprintf(stderr, "\nLZMA 4.40 Copyright (c) 1999-2006 Igor Pavlov  2006-05-01\n");
      PrintHelp();
      return 0;
    }

@@ -1,14 +1,15 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.30
-Release:	2
+Version:	4.42
+Release:	1
 License:	CPL/LGPL
 Group:		Applications/Archiving
-Source0:	http://dl.sourceforge.net/sevenzip/%{name}430.tar.bz2
-# Source0-md5:	d29dd544ef1face2002ad9ce32c93501
+Source0:	http://puzzle.dl.sourceforge.net/sevenzip/%{name}442.tar.bz2
+# Source0-md5:	5274c2bbdac69834be636ad2eaf5bab5
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
+Patch2:		%{name}-type-redefinition.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	gcc >= 5:3.4.0
 BuildRequires:	libstdc++-devel
@@ -63,6 +64,7 @@ Biblioteka LZMA.
 %setup -q -c
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 cd C/7zip/Compress/LZMA_Alone
@@ -70,17 +72,21 @@ cd C/7zip/Compress/LZMA_Alone
 	CXX="%{__cxx}" \
 	CXX_C="%{__cc}" \
 	CFLAGS="%{rpmcflags} -fprofile-generate -c -I ../../.." \
-	LDFLAGS="%{rpmldflags}" \
+	LDFLAGS="%{rpmldflags} -fprofile-generate" \
 	LIB="-lm -lgcov"
 
 cat ../LZMA/* > test1
 cat lzma *.o > test2
-./lzma e test1 test3
-./lzma e test2 test4
-./lzma d test3 test5
-./lzma d test4 test6
-cmp test1 test5
-cmp test2 test6
+tar cf test3 ../../../../*
+./lzma e test1 test4
+./lzma e test2 test5
+./lzma e test3 test6
+./lzma d test4 test7
+./lzma d test5 test8
+./lzma d test6 test9
+cmp test1 test7
+cmp test2 test8
+cmp test3 test9
 
 %{__make} -f makefile.gcc clean
 
