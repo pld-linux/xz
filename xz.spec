@@ -28,7 +28,8 @@ LZMA features:
   - 8-12 MB/s on 1 GHz Intel Pentium 3 or AMD Athlon.
   - 500-1000 KB/s on 100 MHz ARM, MIPS, PowerPC or other simple RISC
     CPU.
-- Small memory requirements for decompressing: 8-32 KB
+- Small memory requirements for decompressing: 8-32 KB + dictionary
+  size
 - Small code size for decompressing: 2-8 KB (depending from speed
   optimizations)
 
@@ -45,7 +46,8 @@ Cechy LZMA:
   - 8-12 MB/s na 1 GHz Pentium 3 lub Athlonie,
   - 500-1000 KB/s na 100 MHz procesorach ARM, MIPS, PowerPC lub innych
     prostych RISC-ach,
-- Ma³a ilo¶æ pamiêci potrzebna do dekompresowania: 8-32 KB,
+- Ma³a ilo¶æ pamiêci potrzebna do dekompresowania: 8-32 KB + rozmiar
+  s³ownika,
 - Ma³y rozmiar kodu dekompresuj±cego: 2-8 KB (w zale¿no¶ci od opcji
   optymalizacji).
 
