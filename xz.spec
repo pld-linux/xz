@@ -52,9 +52,9 @@ Cechy LZMA:
   optymalizacji).
 
 %package devel
-Summary:        LZMA library
+Summary:	LZMA library
 Summary(pl):	Biblioteka LZMA
-Group:          Development/Libraries
+Group:		Development/Libraries
 
 %description devel
 LZMA Library.
