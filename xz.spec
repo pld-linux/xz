@@ -1,12 +1,12 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.06
+Version:	4.43
 Release:	1
 License:	LGPL
 Group:		Applications/Archiving
-Source0:	http://www.7-zip.org/dl/%{name}406.zip
-# Source0-md5:	a09378411cba5f786b5c49c9c58496df
+Source0:	http://puzzle.dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
+# Source0-md5:	c4e1b467184c7cffd4371c74df2baf0f
 # Source0-size:	185934
 Patch0:		%{name}-quiet.patch
 URL:		http://www.7-zip.org/sdk.html
@@ -52,17 +52,19 @@ Cechy LZMA:
 %patch0 -p1
 
 %build
-cd SRC/7zip/Compress/LZMA_Alone
-%{__make} \
-	CXX="%{__cxx}" \
-	CFLAGS="%{rpmcflags} -c" \
-	LDFLAGS="%{rpmldflags}"
+cd C/7zip/Compress/LZMA_Alone
+
+%{__make} -f makefile.gcc \
+        CXX="%{__cxx}" \
+        CXX_C="%{__cc}" \
+        CFLAGS="%{rpmcflags} -c -I ../../.." \
+        LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_bindir}
 
-install SRC/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
+install C/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
