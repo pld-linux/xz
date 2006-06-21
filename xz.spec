@@ -1,12 +1,12 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.42
+Version:	4.43
 Release:	1
 License:	CPL/LGPL
 Group:		Applications/Archiving
-Source0:	http://puzzle.dl.sourceforge.net/sevenzip/%{name}442.tar.bz2
-# Source0-md5:	5274c2bbdac69834be636ad2eaf5bab5
+Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
+# Source0-md5:	c4e1b467184c7cffd4371c74df2baf0f
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
 Patch2:		%{name}-type-redefinition.patch
