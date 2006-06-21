@@ -9,7 +9,6 @@ Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
 # Source0-md5:	c4e1b467184c7cffd4371c74df2baf0f
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
-Patch2:		%{name}-type-redefinition.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	gcc >= 5:3.4.0
 BuildRequires:	libstdc++-devel
@@ -66,7 +65,6 @@ Biblioteka LZMA.
 %setup -q -c
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 cd C/7zip/Compress/LZMA_Alone
