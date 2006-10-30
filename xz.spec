@@ -5,9 +5,8 @@ Version:	4.43
 Release:	1
 License:	LGPL
 Group:		Applications/Archiving
-Source0:	http://puzzle.dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
+Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
 # Source0-md5:	c4e1b467184c7cffd4371c74df2baf0f
-# Source0-size:	185934
 Patch0:		%{name}-quiet.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	libstdc++-devel
@@ -55,10 +54,10 @@ Cechy LZMA:
 cd C/7zip/Compress/LZMA_Alone
 
 %{__make} -f makefile.gcc \
-        CXX="%{__cxx}" \
-        CXX_C="%{__cc}" \
-        CFLAGS="%{rpmcflags} -c -I ../../.." \
-        LDFLAGS="%{rpmldflags}"
+		CXX="%{__cxx}" \
+		CXX_C="%{__cc}" \
+		CFLAGS="%{rpmcflags} -c -I ../../.." \
+		LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
