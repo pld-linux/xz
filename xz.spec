@@ -12,6 +12,7 @@ Patch1:		%{name}427_zlib.patch
 Patch2:		%{name}-shared.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	libstdc++-devel
+# does not need -libs, due apps being not linked with shared lib
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -62,6 +63,7 @@ LZMA shared library
 Summary:	LZMA library
 Summary(pl):	Biblioteka LZMA
 Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 LZMA Library.
@@ -73,6 +75,7 @@ Biblioteka LZMA.
 Summary:	LZMA static library
 Summary(pl):	Biblioteka LZMA
 Group:		Development/Libraries
+# does not need -devel due it containing only library.
 
 %description static
 Static LZMA Library.
