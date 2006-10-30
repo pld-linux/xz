@@ -1,13 +1,16 @@
+# TODO
+# - devel contains shared library. move to -static.
 Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.43
 Release:	1
-License:	LGPL
+License:	CPL/LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
 # Source0-md5:	c4e1b467184c7cffd4371c74df2baf0f
 Patch0:		%{name}-quiet.patch
+Patch1:		%{name}427_zlib.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -25,7 +28,8 @@ LZMA features:
   - 8-12 MB/s on 1 GHz Intel Pentium 3 or AMD Athlon.
   - 500-1000 KB/s on 100 MHz ARM, MIPS, PowerPC or other simple RISC
     CPU.
-- Small memory requirements for decompressing: 8-32 KB
+- Small memory requirements for decompressing: 8-32 KB + dictionary
+  size
 - Small code size for decompressing: 2-8 KB (depending from speed
   optimizations)
 
@@ -42,28 +46,68 @@ Cechy LZMA:
   - 8-12 MB/s na 1 GHz Pentium 3 lub Athlonie,
   - 500-1000 KB/s na 100 MHz procesorach ARM, MIPS, PowerPC lub innych
     prostych RISC-ach,
-- Ma³a ilo¶æ pamiêci potrzebna do dekompresowania: 8-32 KB,
+- Ma³a ilo¶æ pamiêci potrzebna do dekompresowania: 8-32 KB + rozmiar
+  s³ownika,
 - Ma³y rozmiar kodu dekompresuj±cego: 2-8 KB (w zale¿no¶ci od opcji
   optymalizacji).
+
+%package devel
+Summary:	LZMA library
+Summary(pl):	Biblioteka LZMA
+Group:		Development/Libraries
+
+%description devel
+LZMA Library.
+
+%description devel -l pl
+Biblioteka LZMA.
 
 %prep
 %setup -q -c
 %patch0 -p1
+%patch1 -p1
 
 %build
 cd C/7zip/Compress/LZMA_Alone
+%{__make} -f makefile.gcc \
+	CXX="%{__cxx}" \
+	CXX_C="%{__cc}" \
+	CFLAGS="%{rpmcflags} -c -I ../../.." \
+	LDFLAGS="%{rpmldflags}" \
+	LIB="-lm"
+
+cat ../LZMA/* > test1
+cat lzma *.o > test2
+tar cf test3 ../../../../*
+./lzma e test1 test4
+./lzma e test2 test5
+./lzma e test3 test6
+./lzma d test4 test7
+./lzma d test5 test8
+./lzma d test6 test9
+cmp test1 test7
+cmp test2 test8
+cmp test3 test9
+
+%{__make} -f makefile.gcc clean
 
 %{__make} -f makefile.gcc \
-		CXX="%{__cxx}" \
-		CXX_C="%{__cc}" \
-		CFLAGS="%{rpmcflags} -c -I ../../.." \
-		LDFLAGS="%{rpmldflags}"
+	CXX="%{__cxx}" \
+	CXX_C="%{__cc}" \
+	CFLAGS="%{rpmcflags} -c -I ../../.." \
+	LDFLAGS="%{rpmldflags}"
+
+cd ../LZMA_Lib
+%{__make} -f makefile \
+	CXX="%{__cxx}" \
+	CFLAGS="%{rpmcflags} -c"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_bindir}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}}
 
 install C/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
+install C/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -72,3 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc history.txt lzma.txt
 %attr(755,root,root) %{_bindir}/*
+
+%files devel
+%defattr(644,root,root,755)
+%{_libdir}/liblzma.a
