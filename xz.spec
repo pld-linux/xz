@@ -1,16 +1,15 @@
-# TODO
-# - devel contains shared library. move to -static.
 Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.43
-Release:	1
+Release:	2
 License:	CPL/LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
 # Source0-md5:	c4e1b467184c7cffd4371c74df2baf0f
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
+Patch2:		%{name}-shared.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -51,6 +50,14 @@ Cechy LZMA:
 - Ma³y rozmiar kodu dekompresuj±cego: 2-8 KB (w zale¿no¶ci od opcji
   optymalizacji).
 
+%package libs
+Summary:	LZMA shared library
+Summary(pl):	Biblioteka LZMA
+Group:		Libraries
+
+%description libs
+LZMA shared library
+
 %package devel
 Summary:	LZMA library
 Summary(pl):	Biblioteka LZMA
@@ -62,10 +69,19 @@ LZMA Library.
 %description devel -l pl
 Biblioteka LZMA.
 
+%package static
+Summary:	LZMA static library
+Summary(pl):	Biblioteka LZMA
+Group:		Development/Libraries
+
+%description static
+Static LZMA Library.
+
 %prep
 %setup -q -c
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 cd C/7zip/Compress/LZMA_Alone
@@ -108,15 +124,28 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}}
 
 install C/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
 install C/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
+install C/7zip/Compress/LZMA_Lib/liblzma.so.*.*.* $RPM_BUILD_ROOT%{_libdir}
+ln -s $(cd C/7zip/Compress/LZMA_Lib; echo liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
 %doc history.txt lzma.txt
 %attr(755,root,root) %{_bindir}/*
 
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liblzma.so.*.*
+
 %files devel
+%defattr(644,root,root,755)
+%{_libdir}/liblzma.so
+
+%files static
 %defattr(644,root,root,755)
 %{_libdir}/liblzma.a
