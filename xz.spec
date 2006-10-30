@@ -1,3 +1,5 @@
+# TODO
+# - devel contains shared library. move to -static.
 Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
