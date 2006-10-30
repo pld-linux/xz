@@ -63,7 +63,7 @@ LZMA shared library
 Summary:	LZMA library
 Summary(pl):	Biblioteka LZMA
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 LZMA Library.
