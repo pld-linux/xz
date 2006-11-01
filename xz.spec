@@ -2,7 +2,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.43
-Release:	2
+Release:	5
 License:	CPL/LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
@@ -10,6 +10,7 @@ Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
 Patch2:		%{name}-shared.patch
+Patch3:		%{name}-lzmalib.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	libstdc++-devel
 # does not need -libs, due apps being not linked with shared lib
@@ -75,7 +76,7 @@ Biblioteka LZMA.
 Summary:	LZMA static library
 Summary(pl):	Biblioteka LZMA
 Group:		Development/Libraries
-# does not need -devel due it containing only library.
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static LZMA Library.
@@ -85,6 +86,7 @@ Static LZMA Library.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 cd C/7zip/Compress/LZMA_Alone
@@ -123,9 +125,10 @@ cd ../LZMA_Lib
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir}}
 
 install C/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
+install C/7zip/Compress/LZMA_Lib/lzmalib.h $RPM_BUILD_ROOT%{_includedir}
 install C/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
 install C/7zip/Compress/LZMA_Lib/liblzma.so.*.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -s $(cd C/7zip/Compress/LZMA_Lib; echo liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
@@ -147,6 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%{_includedir}/lzmalib.h
 %{_libdir}/liblzma.so
 
 %files static
