@@ -97,36 +97,34 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/makefile lzma427.mod/C/7zip/Comp
 diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Compress/LZMA_Lib/ZLib.cpp
 --- lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp	1970-01-01 09:30:00.000000000 +0930
 +++ lzma427.mod/C/7zip/Compress/LZMA_Lib/ZLib.cpp	2005-08-20 23:00:33.000000000 +0930
-@@ -0,0 +1,283 @@
+@@ -0,0 +1,273 @@
 +/*
 + * lzma zlib simplified wrapper
 + *
 + * Copyright (c) 2005 Oleg I. Vdovikin <oleg@cs.msu.su>
-+ * Modified for LZMA 4.27 SDK Craig.Peacock@beyondlogic.org
 + *
-+ * This library is free software; you can redistribute 
-+ * it and/or modify it under the terms of the GNU Lesser 
-+ * General Public License as published by the Free Software 
-+ * Foundation; either version 2.1 of the License, or 
++ * This library is free software; you can redistribute
++ * it and/or modify it under the terms of the GNU Lesser
++ * General Public License as published by the Free Software
++ * Foundation; either version 2.1 of the License, or
 + * (at your option) any later version.
 + *
-+ * This library is distributed in the hope that it will be 
-+ * useful, but WITHOUT ANY WARRANTY; without even the implied 
-+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-+ * PURPOSE. See the GNU Lesser General Public License 
++ * This library is distributed in the hope that it will be
++ * useful, but WITHOUT ANY WARRANTY; without even the implied
++ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
++ * PURPOSE. See the GNU Lesser General Public License
 + * for more details.
 + *
-+ * You should have received a copy of the GNU Lesser General 
-+ * Public License along with this library; if not, write to 
-+ * the Free Software Foundation, Inc., 59 Temple Place, 
-+ * Suite 330, Boston, MA 02111-1307 USA 
++ * You should have received a copy of the GNU Lesser General
++ * Public License along with this library; if not, write to
++ * the Free Software Foundation, Inc., 59 Temple Place,
++ * Suite 330, Boston, MA 02111-1307 USA
 + */
 +
 +/*
 + * default values for encoder/decoder used by wrapper
 + */
-+
-+#include <zlib.h>
++#include "lzmalib.h"
 +
 +#define ZLIB_LC 3
 +#define ZLIB_LP 0
@@ -139,19 +137,20 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +#endif
 +
 +#include "../../../Common/MyWindows.h"
++#include "../../Common/StreamUtils.h"
 +#include "../LZMA/LZMADecoder.h"
 +#include "../LZMA/LZMAEncoder.h"
 +
 +#define STG_E_SEEKERROR                  ((HRESULT)0x80030019L)
 +#define STG_E_MEDIUMFULL                 ((HRESULT)0x80030070L)
 +
-+class CInMemoryStream: 
++class CInMemoryStream:
 +  public IInStream,
 +  public IStreamGetSize,
 +  public CMyUnknownImp
 +{
 +public:
-+  CInMemoryStream(const Bytef *data, UInt64 size) : 
++  CInMemoryStream(const Bytef *data, UInt64 size) :
 +	  m_data(data), m_size(size), m_offset(0) {}
 +
 +  virtual ~CInMemoryStream() {}
@@ -160,7 +159,7 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +
 +  STDMETHOD(Read)(void *data, UInt32 size, UInt32 *processedSize)
 +  {
-+	  if (size > m_size - m_offset) 
++	  if (size > m_size - m_offset)
 +		  size = m_size - m_offset;
 +
 +	  if (size) {
@@ -169,7 +168,7 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +
 +	  m_offset += size;
 +
-+	  if (processedSize) 
++	  if (processedSize)
 +		  *processedSize = size;
 +
 +	  return S_OK;
@@ -185,7 +184,7 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +	  UInt64 _offset;
 +
 +	  if (seekOrigin == STREAM_SEEK_SET) _offset = offset;
-+	  else if (seekOrigin == STREAM_SEEK_CUR) _offset = m_offset + offset; 
++	  else if (seekOrigin == STREAM_SEEK_CUR) _offset = m_offset + offset;
 +	  else if (seekOrigin == STREAM_SEEK_END) _offset = m_size;
 +	  else return STG_E_INVALIDFUNCTION;
 +
@@ -211,20 +210,20 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +	UInt64 m_offset;
 +};
 +
-+class COutMemoryStream: 
++class COutMemoryStream:
 +  public IOutStream,
 +  public CMyUnknownImp
 +{
 +public:
-+  COutMemoryStream(Bytef *data, UInt64 maxsize) : 
++  COutMemoryStream(Bytef *data, UInt64 maxsize) :
 +	  m_data(data), m_size(0), m_maxsize(maxsize), m_offset(0) {}
 +  virtual ~COutMemoryStream() {}
-+  
++
 +  MY_UNKNOWN_IMP1(IOutStream)
 +
 +  STDMETHOD(Write)(const void *data, UInt32 size, UInt32 *processedSize)
 +  {
-+	  if (size > m_maxsize - m_offset) 
++	  if (size > m_maxsize - m_offset)
 +		  size = m_maxsize - m_offset;
 +
 +	  if (size) {
@@ -236,12 +235,12 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +	  if (m_offset > m_size)
 +		m_size = m_offset;
 +
-+	  if (processedSize) 
++	  if (processedSize)
 +		  *processedSize = size;
 +
 +	  return S_OK;
 +  }
-+  
++
 +  STDMETHOD(WritePart)(const void *data, UInt32 size, UInt32 *processedSize)
 +  {
 +	  return Write(data, size, processedSize);
@@ -252,7 +251,7 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +	  UInt64 _offset;
 +
 +	  if (seekOrigin == STREAM_SEEK_SET) _offset = offset;
-+	  else if (seekOrigin == STREAM_SEEK_CUR) _offset = m_offset + offset; 
++	  else if (seekOrigin == STREAM_SEEK_CUR) _offset = m_offset + offset;
 +	  else if (seekOrigin == STREAM_SEEK_END) _offset = m_size;
 +	  else return STG_E_INVALIDFUNCTION;
 +
@@ -266,10 +265,10 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +
 +	  return S_OK;
 +  }
-+  
++
 +  STDMETHOD(SetSize)(Int64 newSize)
 +  {
-+	  if ((UInt64)newSize > m_maxsize) 
++	  if ((UInt64)newSize > m_maxsize)
 +		  return STG_E_MEDIUMFULL;
 +
 +	  return S_OK;
@@ -281,21 +280,21 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +	UInt64 m_offset;
 +};
 +
-+ZEXTERN int ZEXPORT compress2 OF((Bytef *dest,   uLongf *destLen,
++ZEXTERN int ZEXPORT lzma_compress OF((Bytef *dest,   uLongf *destLen,
 +                                  const Bytef *source, uLong sourceLen,
 +                                  int level))
 +{
 +	CInMemoryStream *inStreamSpec = new CInMemoryStream(source, sourceLen);
 +	CMyComPtr<ISequentialInStream> inStream = inStreamSpec;
-+	
-+	COutMemoryStream *outStreamSpec = new COutMemoryStream(dest+4, (*destLen)-4);
++
++	COutMemoryStream *outStreamSpec = new COutMemoryStream(dest, *destLen);
 +	CMyComPtr<ISequentialOutStream> outStream = outStreamSpec;
-+		
-+	NCompress::NLZMA::CEncoder *encoderSpec = 
++
++	NCompress::NLZMA::CEncoder *encoderSpec =
 +		new NCompress::NLZMA::CEncoder;
 +	CMyComPtr<ICompressCoder> encoder = encoderSpec;
-+	
-+	PROPID propIDs[] = 
++
++	PROPID propIDs[] =
 +	{
 +		NCoderPropID::kDictionarySize,
 +		NCoderPropID::kPosStateBits,
@@ -307,78 +306,69 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +		NCoderPropID::kEndMarker
 +	};
 +	const int kNumProps = sizeof(propIDs) / sizeof(propIDs[0]);
-+	
++
 +	PROPVARIANT properties[kNumProps];
 +	for (int p = 0; p < 6; p++)
 +		properties[p].vt = VT_UI4;
-+	properties[0].ulVal = UInt32(1 << 15);
++	properties[0].ulVal = UInt32(1 << (level + 14));
 +	properties[1].ulVal = UInt32(ZLIB_PB);
 +	properties[2].ulVal = UInt32(ZLIB_LC); // for normal files
 +	properties[3].ulVal = UInt32(ZLIB_LP); // for normal files
-+	properties[4].ulVal = UInt32(0);
-+	properties[5].ulVal = UInt32(0x28);
-+	
++	properties[4].ulVal = UInt32(2);
++	properties[5].ulVal = UInt32(128);
++
 +	properties[6].vt = VT_BSTR;
 +	properties[6].bstrVal = (BSTR)(const wchar_t *)L"BT4";
-+	
++
 +	properties[7].vt = VT_BOOL;
 +	properties[7].boolVal = VARIANT_TRUE;
-+	
++
 +	if (encoderSpec->SetCoderProperties(propIDs, properties, kNumProps) != S_OK)
 +		return Z_MEM_ERROR; // should not happen
-+	
-+	if (encoderSpec->WriteCoderProperties(outStream) != S_OK)
-+		return Z_MEM_ERROR;
-+		
++
 +	HRESULT result = encoder->Code(inStream, outStream, 0, 0, 0);
 +	if (result == E_OUTOFMEMORY)
 +	{
 +		return Z_MEM_ERROR;
-+	}   
++	}
 +	else if (result != S_OK)
 +	{
 +		return Z_BUF_ERROR;	// should not happen
-+	}   
-+	
++	}
++
 +	UInt64 fileSize;
 +	outStreamSpec->Seek(0, STREAM_SEEK_END, &fileSize);
 +	*destLen = fileSize;
-+	
-+	/* Copy size of uncompressed string into first four bytes */
-+	memcpy(dest, &sourceLen, 4);
-+		
++
 +	return Z_OK;
 +}
 +
-+ZEXTERN int ZEXPORT uncompress OF((Bytef *dest,   uLongf *destLen,
++ZEXTERN int ZEXPORT lzma_uncompress OF((Bytef *dest,   uLongf *destLen,
 +                                   const Bytef *source, uLong sourceLen))
 +{
-+	CInMemoryStream *inStreamSpec = new CInMemoryStream(source+9, sourceLen-9);
++	CInMemoryStream *inStreamSpec = new CInMemoryStream(source, sourceLen);
 +	CMyComPtr<ISequentialInStream> inStream = inStreamSpec;
-+	
++
 +	COutMemoryStream *outStreamSpec = new COutMemoryStream(dest, *destLen);
 +	CMyComPtr<ISequentialOutStream> outStream = outStreamSpec;
-+	
-+	NCompress::NLZMA::CDecoder *decoderSpec = 
++
++	NCompress::NLZMA::CDecoder *decoderSpec =
 +		new NCompress::NLZMA::CDecoder;
 +	CMyComPtr<ICompressCoder> decoder = decoderSpec;
-+	
-+	//if (decoderSpec->SetDecoderPropertiesRaw(ZLIB_LC, 
-+	//	ZLIB_LP, ZLIB_PB, (1 << 23)) != S_OK) return Z_DATA_ERROR;
-+	
-+	if (decoderSpec->SetDecoderProperties2(source+4, 5) != S_OK) 
-+		return Z_DATA_ERROR;
-+	
++
++	if (decoderSpec->SetDecoderPropertiesRaw(ZLIB_LC,
++		ZLIB_LP, ZLIB_PB, (1 << 23)) != S_OK) return Z_DATA_ERROR;
++
 +	UInt64 fileSize = *destLen;
-+	
++
 +	if (decoder->Code(inStream, outStream, 0, &fileSize, 0) != S_OK)
 +	{
 +		return Z_DATA_ERROR;
 +	}
-+	
++
 +	outStreamSpec->Seek(0, STREAM_SEEK_END, &fileSize);
 +	*destLen = fileSize;
-+	
++
 +	return Z_OK;
 +}
 diff -ruN lzma427.orig/C/Common/CommandLineParser.h lzma427.mod/C/Common/CommandLineParser.h
