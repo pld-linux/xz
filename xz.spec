@@ -2,7 +2,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.43
-Release:	4
+Release:	5
 License:	CPL/LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
@@ -128,8 +128,8 @@ cd ../LZMA_Lib
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir}}
 
-install lzmalib.h $RPM_BUILD_ROOT%{_includedir}
 install C/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
+install C/7zip/Compress/LZMA_Lib/lzmalib.h $RPM_BUILD_ROOT%{_includedir}
 install C/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
 install C/7zip/Compress/LZMA_Lib/liblzma.so.*.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -s $(cd C/7zip/Compress/LZMA_Lib; echo liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
