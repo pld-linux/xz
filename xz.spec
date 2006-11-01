@@ -77,7 +77,7 @@ Biblioteka LZMA.
 Summary:	LZMA static library
 Summary(pl):	Biblioteka LZMA
 Group:		Development/Libraries
-# does not need -devel due it containing only library.
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static LZMA Library.
