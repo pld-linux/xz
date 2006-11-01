@@ -2,7 +2,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.43
-Release:	5
+Release:	6
 License:	CPL/LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
@@ -121,7 +121,7 @@ cmp test3 test9
 cd ../LZMA_Lib
 %{__make} -f makefile \
 	CXX="%{__cxx}" \
-	CFLAGS="%{rpmcflags} -c"
+	CFLAGS="%{rpmcflags} -c -fpic"
 
 %install
 rm -rf $RPM_BUILD_ROOT
