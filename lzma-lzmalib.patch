@@ -75,7 +75,7 @@ Index: lzma/C/7zip/Compress/LZMA/LZMAEncoder.cpp
 Index: lzma/lzmalib.h
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ lzma/lzmalib.h	2006-10-31 13:56:37.000000000 +1100
++++ ./C/7zip/Compress/LZMA_Lib/lzmalib.h	2006-10-31 13:56:37.000000000 +1100
 @@ -0,0 +1,1362 @@
 +/* lzmalib.h - altered version of zlib.h
 +  zlib.h -- interface of the 'zlib' general purpose compression library
