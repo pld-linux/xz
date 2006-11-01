@@ -189,7 +189,7 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +	  else if (seekOrigin == STREAM_SEEK_END) _offset = m_size;
 +	  else return STG_E_INVALIDFUNCTION;
 +
-+	  if (_offset < 0 || _offset > m_size)
++	  if (_offset > m_size)
 +		  return STG_E_SEEKERROR;
 +
 +	  m_offset = _offset;
@@ -256,7 +256,7 @@ diff -ruN lzma427.orig/C/7zip/Compress/LZMA_Lib/ZLib.cpp lzma427.mod/C/7zip/Comp
 +	  else if (seekOrigin == STREAM_SEEK_END) _offset = m_size;
 +	  else return STG_E_INVALIDFUNCTION;
 +
-+	  if (_offset < 0 || _offset > m_maxsize)
++	  if (_offset > m_maxsize)
 +		  return STG_E_SEEKERROR;
 +
 +	  m_offset = _offset;
