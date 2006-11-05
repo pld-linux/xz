@@ -55,32 +55,38 @@ Cechy LZMA:
 
 %package libs
 Summary:	LZMA shared library
-Summary(pl):	Biblioteka LZMA
+Summary(pl):	Biblioteka wspó³dzielona LZMA
 Group:		Libraries
 
 %description libs
-LZMA shared library
+LZMA shared library.
+
+%description libs -l pl
+Biblioteka wspó³dzielona LZMA.
 
 %package devel
-Summary:	LZMA library
-Summary(pl):	Biblioteka LZMA
+Summary:	Header file for LZMA library
+Summary(pl):	Plik nag³ówkowy biblioteki LZMA
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
-LZMA Library.
+Header file for LZMA library.
 
 %description devel -l pl
-Biblioteka LZMA.
+Plik nag³ówkowy biblioteki LZMA.
 
 %package static
 Summary:	LZMA static library
-Summary(pl):	Biblioteka LZMA
+Summary(pl):	Biblioteka statyczna LZMA
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-Static LZMA Library.
+LZMA static library.
+
+%description static -l pl
+Biblioteka statyczna LZMA.
 
 %prep
 %setup -q -c
@@ -151,8 +157,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liblzma.so
 %{_includedir}/lzmalib.h
-%{_libdir}/liblzma.so
 
 %files static
 %defattr(644,root,root,755)
