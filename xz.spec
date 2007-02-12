@@ -1,5 +1,5 @@
 Summary:	LZMA Encoder/Decoder
-Summary(pl):	Koder/Dekoder LZMA
+Summary(pl.UTF-8):   Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.43
 Release:	5
@@ -35,57 +35,57 @@ LZMA features:
 - Small code size for decompressing: 2-8 KB (depending from speed
   optimizations)
 
-%description -l pl
-LZMA jest domy¶lnym i ogólnym algorytmem kompresji formatu 7z
-stosowanego przez 7-Zip. LZMA zapewnia wysoki stopieñ kompresji i
-bardzo szybk± dekompresjê, wiêc nadaje siê do zastosowañ osadzonych.
-Przyk³adowo, mo¿e byæ u¿yty do kompresji ROM-u (firmware'u).
+%description -l pl.UTF-8
+LZMA jest domyÅ›lnym i ogÃ³lnym algorytmem kompresji formatu 7z
+stosowanego przez 7-Zip. LZMA zapewnia wysoki stopieÅ„ kompresji i
+bardzo szybkÄ… dekompresjÄ™, wiÄ™c nadaje siÄ™ do zastosowaÅ„ osadzonych.
+PrzykÅ‚adowo, moÅ¼e byÄ‡ uÅ¼yty do kompresji ROM-u (firmware'u).
 
 Cechy LZMA:
 
-- Szybko¶æ kompresowania: 500 KB/s na 1 GHz procesorze,
-- Szybko¶æ dekompresowania:
+- SzybkoÅ›Ä‡ kompresowania: 500 KB/s na 1 GHz procesorze,
+- SzybkoÅ›Ä‡ dekompresowania:
   - 8-12 MB/s na 1 GHz Pentium 3 lub Athlonie,
   - 500-1000 KB/s na 100 MHz procesorach ARM, MIPS, PowerPC lub innych
     prostych RISC-ach,
-- Ma³a ilo¶æ pamiêci potrzebna do dekompresowania: 8-32 KB + rozmiar
-  s³ownika,
-- Ma³y rozmiar kodu dekompresuj±cego: 2-8 KB (w zale¿no¶ci od opcji
+- MaÅ‚a iloÅ›Ä‡ pamiÄ™ci potrzebna do dekompresowania: 8-32 KB + rozmiar
+  sÅ‚ownika,
+- MaÅ‚y rozmiar kodu dekompresujÄ…cego: 2-8 KB (w zaleÅ¼noÅ›ci od opcji
   optymalizacji).
 
 %package libs
 Summary:	LZMA shared library
-Summary(pl):	Biblioteka wspó³dzielona LZMA
+Summary(pl.UTF-8):   Biblioteka wspÃ³Å‚dzielona LZMA
 Group:		Libraries
 
 %description libs
 LZMA shared library.
 
-%description libs -l pl
-Biblioteka wspó³dzielona LZMA.
+%description libs -l pl.UTF-8
+Biblioteka wspÃ³Å‚dzielona LZMA.
 
 %package devel
 Summary:	Header file for LZMA library
-Summary(pl):	Plik nag³ówkowy biblioteki LZMA
+Summary(pl.UTF-8):   Plik nagÅ‚Ã³wkowy biblioteki LZMA
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 Header file for LZMA library.
 
-%description devel -l pl
-Plik nag³ówkowy biblioteki LZMA.
+%description devel -l pl.UTF-8
+Plik nagÅ‚Ã³wkowy biblioteki LZMA.
 
 %package static
 Summary:	LZMA static library
-Summary(pl):	Biblioteka statyczna LZMA
+Summary(pl.UTF-8):   Biblioteka statyczna LZMA
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 LZMA static library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Biblioteka statyczna LZMA.
 
 %prep
