@@ -1,5 +1,5 @@
 Summary:	LZMA Encoder/Decoder
-Summary(pl.UTF-8):   Koder/Dekoder LZMA
+Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.43
 Release:	5
@@ -55,7 +55,7 @@ Cechy LZMA:
 
 %package libs
 Summary:	LZMA shared library
-Summary(pl.UTF-8):   Biblioteka współdzielona LZMA
+Summary(pl.UTF-8):	Biblioteka współdzielona LZMA
 Group:		Libraries
 
 %description libs
@@ -66,7 +66,7 @@ Biblioteka współdzielona LZMA.
 
 %package devel
 Summary:	Header file for LZMA library
-Summary(pl.UTF-8):   Plik nagłówkowy biblioteki LZMA
+Summary(pl.UTF-8):	Plik nagłówkowy biblioteki LZMA
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
@@ -78,7 +78,7 @@ Plik nagłówkowy biblioteki LZMA.
 
 %package static
 Summary:	LZMA static library
-Summary(pl.UTF-8):   Biblioteka statyczna LZMA
+Summary(pl.UTF-8):	Biblioteka statyczna LZMA
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
