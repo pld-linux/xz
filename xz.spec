@@ -101,7 +101,7 @@ cd C/7zip/Compress/LZMA_Alone
 	CXX="%{__cxx}" \
 	CXX_C="%{__cc}" \
 	CFLAGS="%{rpmcflags} -fprofile-generate -c -I ../../.." \
-	LDFLAGS="%{rpmldflags} -fprofile-generate" \
+	LDFLAGS="%{rpmcflags} %{rpmldflags} -fprofile-generate" \
 	LIB="-lm -lgcov"
 
 cat ../LZMA/* > test1
@@ -123,12 +123,14 @@ cmp test3 test9
 	CXX="%{__cxx}" \
 	CXX_C="%{__cc}" \
 	CFLAGS="%{rpmcflags} -fprofile-use -c -I ../../.." \
-	LDFLAGS="%{rpmldflags}"
+	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
 cd ../LZMA_Lib
 %{__make} -f makefile \
 	CXX="%{__cxx}" \
-	CFLAGS="%{rpmcflags} -c -fpic"
+	CFLAGS="%{rpmcflags} -c -fpic" \
+	LDFLAGS="%{rpmcflags} %{rpmldflags}"
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
