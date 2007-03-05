@@ -11,7 +11,7 @@
  	$(AR) r $(PROG) $(OBJS)
  
 +liblzma.so.0.0.0:	$(OBJS)
-+	$(CXX) -shared -o $@ -Wl,-soname,liblzma.so.0 $(OBJS)
++	$(CXX) -shared -o $@ $(LDFLAGS) -Wl,-soname,liblzma.so.0 $(OBJS)
 +
  ZLib.o: ZLib.cpp
  	$(CXX) $(CFLAGS) ZLib.cpp
