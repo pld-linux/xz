@@ -1,12 +1,12 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.43
-Release:	5
+Version:	4.49
+Release:	0.9
 License:	CPL/LGPL
 Group:		Applications/Archiving
-Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
-# Source0-md5:	c4e1b467184c7cffd4371c74df2baf0f
+Source0:	http://dl.sourceforge.net/sevenzip/%{name}449.tar.bz2
+# Source0-md5:	410487fe9717ce5a37e3c810cee74092
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
 Patch2:		%{name}-shared.patch
@@ -91,12 +91,12 @@ Biblioteka statyczna LZMA.
 %prep
 %setup -q -c
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%patch3 -p1
 
 %build
-cd C/7zip/Compress/LZMA_Alone
+cd CPP/7zip/Compress/LZMA_Alone
 %{__make} -f makefile.gcc \
 	CXX="%{__cxx}" \
 	CXX_C="%{__cc}" \
@@ -125,22 +125,22 @@ cmp test3 test9
 	CFLAGS="%{rpmcflags} -fprofile-use -c -I ../../.." \
 	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
-cd ../LZMA_Lib
-%{__make} -f makefile \
-	CXX="%{__cxx}" \
-	CFLAGS="%{rpmcflags} -c -fpic" \
-	LDFLAGS="%{rpmcflags} %{rpmldflags}"
+#cd ../LZMA_Lib
+#%{__make} -f makefile \
+#	CXX="%{__cxx}" \
+#	CFLAGS="%{rpmcflags} -c -fpic" \
+#	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir}}
 
-install C/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
-install C/7zip/Compress/LZMA_Lib/lzmalib.h $RPM_BUILD_ROOT%{_includedir}
-install C/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
-install C/7zip/Compress/LZMA_Lib/liblzma.so.*.*.* $RPM_BUILD_ROOT%{_libdir}
-ln -s $(cd C/7zip/Compress/LZMA_Lib; echo liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
+install CPP/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
+#install CPP/7zip/Compress/LZMA_Lib/lzmalib.h $RPM_BUILD_ROOT%{_includedir}
+#install CPP/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
+#install CPP/7zip/Compress/LZMA_Lib/liblzma.so.*.*.* $RPM_BUILD_ROOT%{_libdir}
+#ln -s $(cd CPP/7zip/Compress/LZMA_Lib; echo liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -153,15 +153,15 @@ rm -rf $RPM_BUILD_ROOT
 %doc history.txt lzma.txt
 %attr(755,root,root) %{_bindir}/*
 
-%files libs
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liblzma.so.*.*
+#%files libs
+#%defattr(644,root,root,755)
+#%attr(755,root,root) %{_libdir}/liblzma.so.*.*
 
-%files devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liblzma.so
-%{_includedir}/lzmalib.h
+#%files devel
+#%defattr(644,root,root,755)
+#%attr(755,root,root) %{_libdir}/liblzma.so
+#%{_includedir}/lzmalib.h
 
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/liblzma.a
+#%files static
+#%defattr(644,root,root,755)
+#%{_libdir}/liblzma.a
