@@ -13,7 +13,6 @@ Patch2:		%{name}-shared.patch
 Patch3:		%{name}-lzmalib.patch
 Patch4:		%{name}-makefile.patch
 URL:		http://www.7-zip.org/sdk.html
-BuildRequires:	gcc >= 5:3.4.0
 BuildRequires:	libstdc++-devel
 # does not need -libs, due apps being not linked with shared lib
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -101,29 +100,8 @@ Biblioteka statyczna LZMA.
 cd CPP/7zip/Compress/LZMA_Alone
 %{__make} -f makefile \
 	CXX="%{__cxx}" \
-	CXX_C="%{__cc}" \
-	OPTFLAGS="%{rpmcflags} -fprofile-generate" \
-	LDFLAGS="%{rpmcflags} %{rpmldflags} -fprofile-generate"
-
-cat ../LZMA/* > test1
-cat lzma *.o > test2
-tar cf test3 ../../../../*
-./lzma e test1 test4 -mt4
-./lzma e test2 test5 -mt4
-./lzma e test3 test6 -mt4
-./lzma d test4 test7 -mt4
-./lzma d test5 test8 -mt4
-./lzma d test6 test9 -mt4
-cmp test1 test7
-cmp test2 test8
-cmp test3 test9
-
-%{__make} -f makefile clean
-
-%{__make} -f makefile \
-	CXX="%{__cxx}" \
 	CC="%{__cc}" \
-	OPTFLAGS="%{rpmcflags} -fprofile-use" \
+	OPTFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
 #cd ../LZMA_Lib
