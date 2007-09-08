@@ -1,0 +1,53 @@
+diff -ruN p7zip_4.53./CPP/7zip/Compress/LZMA_Alone/makefile p7zip_4.53/CPP/7zip/Compress/LZMA_Alone/makefile
+--- p7zip_4.53./CPP/7zip/Compress/LZMA_Alone/makefile	2007-08-15 12:56:22.000000000 +0200
++++ p7zip_4.53/CPP/7zip/Compress/LZMA_Alone/makefile	2007-09-08 15:54:45.932943651 +0200
+@@ -4,7 +4,7 @@
+ LIB = $(LOCAL_LIBS)
+ RM = rm -f
+ CFLAGS = -c -I. -I../../../  -I../../../myWindows  -I../../../include_windows \
+-         -UENV_UNIX -DCOMPRESS_MF_MT -DBENCH_MT
++         -DCOMPRESS_MF_MT -DBENCH_MT $(ALLFLAGS)
+ 
+ OBJS = \
+   LzmaAlone.o \
+@@ -31,10 +31,12 @@
+   MatchFinder.o \
+   LzmaDecode.o \
+   LzmaRamDecode.o \
+-  C_FileIO.o \
+   System.o \
+   Threads.o \
+-  MatchFinderMt.o
++  MatchFinderMt.o \
++  FileIO.o \
++  FileFind.o \
++  wine_date_and_time.o
+ 
+ all: $(PROG)
+ 
+@@ -77,9 +79,6 @@
+ StreamUtils.o: ../../Common/StreamUtils.cpp
+ 	$(CXX) $(CFLAGS) ../../Common/StreamUtils.cpp
+ 
+-C_FileIO.o: ../../../Common/C_FileIO.cpp
+-	$(CXX) $(CFLAGS) ../../../Common/C_FileIO.cpp
+-
+ CommandLineParser.o: ../../../Common/CommandLineParser.cpp
+ 	$(CXX) $(CFLAGS) ../../../Common/CommandLineParser.cpp
+ 
+@@ -128,6 +127,15 @@
+ MatchFinderMt.o : ../../../../C/Compress/Lz/MatchFinderMt.c
+ 	$(CC) $(CFLAGS) ../../../../C/Compress/Lz/MatchFinderMt.c
+ 
++FileIO.o: ../../../Windows/FileIO.cpp
++	$(CXX) $(CFLAGS) ../../../Windows/FileIO.cpp
++
++FileFind.o: ../../../Windows/FileFind.cpp
++	$(CXX) $(CFLAGS) ../../../Windows/FileFind.cpp
++
++wine_date_and_time.o: ../../../myWindows/wine_date_and_time.cpp
++	$(CXX) $(CFLAGS) ../../../myWindows/wine_date_and_time.cpp
++
+ clean:
+ 	-$(RM) $(PROG) $(OBJS) testfile*
+ 
