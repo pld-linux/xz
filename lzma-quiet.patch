@@ -1,14 +1,15 @@
 --- lzma-4.43/CPP/7zip/Compress/LZMA_Alone/LzmaAlone.cpp.1	2006-06-14 22:00:04.433513750 +0000
 +++ lzma-4.43/CPP/7zip/Compress/LZMA_Alone/LzmaAlone.cpp	2006-06-14 22:00:45.900105250 +0000
-@@ -152,10 +152,10 @@
+@@ -159,10 +159,10 @@
    g_IsNT = IsItWindowsNT();
    #endif
  
 -  fprintf(stderr, "\nLZMA 4.49 Copyright (c) 1999-2007 Igor Pavlov  2007-07-05\n");
- 
+-
    if (n == 1)
    {
 +    fprintf(stderr, "\nLZMA 4.49 Copyright (c) 1999-2007 Igor Pavlov  2007-07-05\n");
++
      PrintHelp();
      return 0;
    }
