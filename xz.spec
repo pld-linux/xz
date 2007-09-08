@@ -2,15 +2,16 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.49
-Release:	0.9
+Release:	1
 License:	CPL/LGPL
 Group:		Applications/Archiving
-Source0:	http://dl.sourceforge.net/sevenzip/%{name}449.tar.bz2
-# Source0-md5:	410487fe9717ce5a37e3c810cee74092
+Source0:	http://dl.sourceforge.net/p7zip/p7zip_4.53_src_all.tar.bz2
+# Source0-md5:	331450463d5737bba96cbea2115abe8b
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
 Patch2:		%{name}-shared.patch
 Patch3:		%{name}-lzmalib.patch
+Patch4:		%{name}-makefile.patch
 URL:		http://www.7-zip.org/sdk.html
 BuildRequires:	gcc >= 5:3.4.0
 BuildRequires:	libstdc++-devel
@@ -89,40 +90,40 @@ LZMA static library.
 Biblioteka statyczna LZMA.
 
 %prep
-%setup -q -c
+%setup -q -n p7zip_4.53
 %patch0 -p1
 #%patch1 -p1
 #%patch2 -p1
 #%patch3 -p1
+%patch4 -p1
 
 %build
 cd CPP/7zip/Compress/LZMA_Alone
-%{__make} -f makefile.gcc \
+%{__make} -f makefile \
 	CXX="%{__cxx}" \
 	CXX_C="%{__cc}" \
-	CFLAGS="%{rpmcflags} -fprofile-generate -c -I ../../.." \
-	LDFLAGS="%{rpmcflags} %{rpmldflags} -fprofile-generate" \
-	LIB="-lm -lgcov"
+	OPTFLAGS="%{rpmcflags} -fprofile-generate" \
+	LDFLAGS="%{rpmcflags} %{rpmldflags} -fprofile-generate"
 
 cat ../LZMA/* > test1
 cat lzma *.o > test2
 tar cf test3 ../../../../*
-./lzma e test1 test4
-./lzma e test2 test5
-./lzma e test3 test6
-./lzma d test4 test7
-./lzma d test5 test8
-./lzma d test6 test9
+./lzma e test1 test4 -mt4
+./lzma e test2 test5 -mt4
+./lzma e test3 test6 -mt4
+./lzma d test4 test7 -mt4
+./lzma d test5 test8 -mt4
+./lzma d test6 test9 -mt4
 cmp test1 test7
 cmp test2 test8
 cmp test3 test9
 
-%{__make} -f makefile.gcc clean
+%{__make} -f makefile clean
 
-%{__make} -f makefile.gcc \
+%{__make} -f makefile \
 	CXX="%{__cxx}" \
-	CXX_C="%{__cc}" \
-	CFLAGS="%{rpmcflags} -fprofile-use -c -I ../../.." \
+	CC="%{__cc}" \
+	OPTFLAGS="%{rpmcflags} -fprofile-use" \
 	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
 #cd ../LZMA_Lib
@@ -150,7 +151,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc history.txt lzma.txt
+#%doc history.txt lzma.txt
 %attr(755,root,root) %{_bindir}/*
 
 #%files libs
