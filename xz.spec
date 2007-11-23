@@ -1,12 +1,12 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.53
+Version:	4.55
 Release:	1
 License:	CPL/LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/p7zip_%{version}_src_all.tar.bz2
-# Source0-md5:	331450463d5737bba96cbea2115abe8b
+# Source0-md5:	bb141529cf2374a2e15735f155273172
 Patch0:		%{name}-quiet.patch
 Patch1:		%{name}427_zlib.patch
 Patch2:		%{name}-shared.patch
