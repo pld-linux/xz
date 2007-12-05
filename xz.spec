@@ -1,18 +1,18 @@
+# TODO:
+# - wait for alpha7 which will fix headers installation issue
+%define	snap	alpha6
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.55
-Release:	1
-License:	CPL/LGPL
+Version:	4.42.0
+Release:	0.%{snap}.1
+Epoch:		1
+License:	GPL v3+/GPL v2+/GPL v2.1+/Public Domain
 Group:		Applications/Archiving
-Source0:	http://dl.sourceforge.net/p7zip/p7zip_%{version}_src_all.tar.bz2
-# Source0-md5:	bb141529cf2374a2e15735f155273172
-Patch0:		%{name}-quiet.patch
-Patch1:		%{name}427_zlib.patch
-Patch2:		%{name}-shared.patch
-Patch3:		%{name}-lzmalib.patch
-Patch4:		%{name}-makefile.patch
-URL:		http://www.7-zip.org/sdk.html
+Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
+# Source0-md5:	a22b0c661472e88942f683dd0f1852f0
+Patch0:		%{name}-fixes.patch
+URL:		http://tukaani.org/lzma/
 BuildRequires:	libstdc++-devel
 # does not need -libs, due apps being not linked with shared lib
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -89,37 +89,25 @@ LZMA static library.
 Biblioteka statyczna LZMA.
 
 %prep
-%setup -q -n p7zip_%{version}
+%setup -q -n %{name}-%{version}%{snap}
 %patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
-#%patch3 -p1
-%patch4 -p1
 
 %build
-cd CPP/7zip/Compress/LZMA_Alone
-%{__make} -f makefile \
-	CXX="%{__cxx}" \
-	CC="%{__cc}" \
-	OPTFLAGS="%{rpmcflags}" \
-	LDFLAGS="%{rpmcflags} %{rpmldflags}"
+%configure
 
-#cd ../LZMA_Lib
-#%{__make} -f makefile \
-#	CXX="%{__cxx}" \
-#	CFLAGS="%{rpmcflags} -c -fpic" \
-#	LDFLAGS="%{rpmcflags} %{rpmldflags}"
-
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir}}
 
-install CPP/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
-#install CPP/7zip/Compress/LZMA_Lib/lzmalib.h $RPM_BUILD_ROOT%{_includedir}
-#install CPP/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
-#install CPP/7zip/Compress/LZMA_Lib/liblzma.so.*.*.* $RPM_BUILD_ROOT%{_libdir}
-#ln -s $(cd CPP/7zip/Compress/LZMA_Lib; echo liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
+install -d $RPM_BUILD_ROOT%{_includedir}
+
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+
+install src/common/lzma*.h $RPM_BUILD_ROOT%{_includedir}
+
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -129,18 +117,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-#%doc history.txt lzma.txt
 %attr(755,root,root) %{_bindir}/*
+%{_mandir}/man1/*
 
-#%files libs
-#%defattr(644,root,root,755)
-#%attr(755,root,root) %{_libdir}/liblzma.so.*.*
+%files libs -f %{name}.lang
+%defattr(644,root,root,755)
+%doc AUTHORS COPYING* FAQ NEWS README* THANKS TODO
+%attr(755,root,root) %{_libdir}/lib*.so.*
 
-#%files devel
-#%defattr(644,root,root,755)
-#%attr(755,root,root) %{_libdir}/liblzma.so
-#%{_includedir}/lzmalib.h
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/*.la
+%{_includedir}/*.h
+%{_pkgconfigdir}/*.pc
 
-#%files static
-#%defattr(644,root,root,755)
-#%{_libdir}/liblzma.a
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a
