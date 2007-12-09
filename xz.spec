@@ -5,7 +5,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.42.0
-Release:	0.%{snap}.1
+Release:	0.%{snap}.2
 Epoch:		1
 License:	GPL v3+/GPL v2+/GPL v2.1+/Public Domain
 Group:		Applications/Archiving
@@ -68,7 +68,7 @@ Biblioteka współdzielona LZMA.
 Summary:	Header file for LZMA library
 Summary(pl.UTF-8):	Plik nagłówkowy biblioteki LZMA
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description devel
 Header file for LZMA library.
@@ -80,7 +80,7 @@ Plik nagłówkowy biblioteki LZMA.
 Summary:	LZMA static library
 Summary(pl.UTF-8):	Biblioteka statyczna LZMA
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 LZMA static library.
