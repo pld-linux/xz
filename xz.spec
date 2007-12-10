@@ -1,17 +1,16 @@
 # TODO:
 # - wait for alpha7 which will fix headers installation issue
-%define	snap	alpha6
+%define	snap	alpha
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.42.0
-Release:	0.%{snap}.2
+Version:	4.42.2
+Release:	0.%{snap}.1
 Epoch:		1
 License:	GPL v3+/GPL v2+/GPL v2.1+/Public Domain
 Group:		Applications/Archiving
 Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
-# Source0-md5:	a22b0c661472e88942f683dd0f1852f0
-Patch0:		%{name}-fixes.patch
+# Source0-md5:	5cef8b41aecee8ce1c6fbc681701fe61
 URL:		http://tukaani.org/lzma/
 BuildRequires:	libstdc++-devel
 # does not need -libs, due apps being not linked with shared lib
@@ -90,7 +89,6 @@ Biblioteka statyczna LZMA.
 
 %prep
 %setup -q -n %{name}-%{version}%{snap}
-%patch0 -p1
 
 %build
 %configure
@@ -100,12 +98,8 @@ Biblioteka statyczna LZMA.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_includedir}
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-install src/common/lzma*.h $RPM_BUILD_ROOT%{_includedir}
 
 %find_lang %{name}
 
@@ -122,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING* FAQ NEWS README* THANKS TODO
+%doc AUTHORS COPYING* NEWS README* THANKS TODO
 %attr(755,root,root) %{_libdir}/lib*.so.*
 
 %files devel
@@ -130,6 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/*.la
 %{_includedir}/*.h
+%{_includedir}/lzma
 %{_pkgconfigdir}/*.pc
 
 %files static
