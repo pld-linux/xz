@@ -117,10 +117,13 @@ rm -rf $RPM_BUILD_ROOT
 %files libs -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING* NEWS README* THANKS TODO
+%doc doc/{bugs,faq,file-format,history}.txt
+%doc doc/lzma-intro.txt
 %attr(755,root,root) %{_libdir}/lib*.so.*
 
 %files devel
 %defattr(644,root,root,755)
+%doc doc/liblzma-*.txt
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/*.la
 %{_includedir}/*.h
