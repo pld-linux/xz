@@ -1,5 +1,7 @@
 # TODO:
 # - wait for alpha7 which will fix headers installation issue
+%bcond_without	tests
+#
 %define	snap	alpha
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
@@ -102,6 +104,8 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %find_lang %{name}
+
+%{?with_tests:%{__make} check}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
