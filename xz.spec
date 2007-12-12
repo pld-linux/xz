@@ -1,6 +1,9 @@
 # TODO:
 # - wait for alpha7 which will fix headers installation issue
-%bcond_without	tests
+# - fix invalid "GPL v2.1+" in License
+#
+# Conditional build:
+%bcond_without	tests	# don't perform make check
 #
 %define	snap	alpha
 Summary:	LZMA Encoder/Decoder
