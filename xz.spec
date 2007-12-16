@@ -1,6 +1,5 @@
 # TODO:
 # - wait for alpha7 which will fix headers installation issue
-# - fix invalid "GPL v2.1+" in License
 #
 # Conditional build:
 %bcond_without	tests	# don't perform make check
@@ -12,7 +11,7 @@ Name:		lzma
 Version:	4.42.2
 Release:	0.%{snap}.1
 Epoch:		1
-License:	GPL v3+/GPL v2+/GPL v2.1+/Public Domain
+License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
 # Source0-md5:	5cef8b41aecee8ce1c6fbc681701fe61
@@ -118,25 +117,25 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
-%{_mandir}/man1/*
+%attr(755,root,root) %{_bindir}/lz*
+%{_mandir}/man1/lz*.1*
 
 %files libs -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING* NEWS README* THANKS TODO
-%doc doc/{bugs,faq,file-format,history}.txt
-%doc doc/lzma-intro.txt
-%attr(755,root,root) %{_libdir}/lib*.so.*
+%doc AUTHORS COPYING README THANKS TODO
+%doc doc/{bugs,faq,file-format,history,lzma-intro}.txt
+%attr(755,root,root) %{_libdir}/liblzma.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liblzma.so.0
 
 %files devel
 %defattr(644,root,root,755)
 %doc doc/liblzma-*.txt
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/*.la
-%{_includedir}/*.h
+%attr(755,root,root) %{_libdir}/liblzma.so
+%{_libdir}/liblzma.la
+%{_includedir}/lzma.h
 %{_includedir}/lzma
-%{_pkgconfigdir}/*.pc
+%{_pkgconfigdir}/lzma.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/liblzma.a
