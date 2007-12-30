@@ -16,6 +16,7 @@ Group:		Applications/Archiving
 Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
 # Source0-md5:	5cef8b41aecee8ce1c6fbc681701fe61
 URL:		http://tukaani.org/lzma/
+BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -102,15 +103,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-# fix manuals
-cd $RPM_BUILD_ROOT%{_mandir}/man1
-rm -f lzcmp.1 lzegrep.1 lzfgrep.1 lzless.1
-echo ".so lzdiff.1" > lzcmp.1
-echo ".so lzgrep.1" > lzegrep.1
-echo ".so lzgrep.1" > lzfgrep.1
-echo ".so lzmore.1" > lzless.1
-cd -
 
 %find_lang %{name}
 
