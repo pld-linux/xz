@@ -1,5 +1,3 @@
-# TODO:
-# - wait for alpha7 which will fix headers installation issue
 #
 # Conditional build:
 %bcond_without	tests	# don't perform make check
@@ -9,7 +7,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.999.3
-Release:	0.%{snap}.1
+Release:	0.%{snap}.2
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
@@ -102,9 +100,13 @@ Biblioteka statyczna LZMA.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT/%{_lib}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+mv -f $RPM_BUILD_ROOT%{_libdir}/liblzma.so.* $RPM_BUILD_ROOT/%{_lib}
+ln -sf /%{_lib}/liblzma.0.0.0 $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
 %find_lang %{name}
 
@@ -123,8 +125,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING README THANKS TODO
 %doc doc/{bugs,faq,file-format,history,lzma-intro}.txt
-%attr(755,root,root) %{_libdir}/liblzma.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liblzma.so.0
+%attr(755,root,root) /%{_lib}/liblzma.so.*.*.*
+%attr(755,root,root) %ghost /%{_lib}/liblzma.so.0
 
 %files devel
 %defattr(644,root,root,755)
