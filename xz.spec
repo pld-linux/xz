@@ -7,7 +7,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.999.3
-Release:	0.%{snap}.2
+Release:	0.%{snap}.3
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
@@ -106,7 +106,7 @@ install -d $RPM_BUILD_ROOT/%{_lib}
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_libdir}/liblzma.so.* $RPM_BUILD_ROOT/%{_lib}
-ln -sf /%{_lib}/liblzma.0.0.0 $RPM_BUILD_ROOT%{_libdir}/liblzma.so
+ln -sf /%{_lib}/liblzma.so.0.0.0 $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
 %find_lang %{name}
 
