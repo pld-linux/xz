@@ -6,13 +6,13 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
-Version:	4.999.3
-Release:	0.%{snap}.3
+Version:	4.999.5
+Release:	0.%{snap}.1
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
-# Source0-md5:	23b0d73bda022964a9dfc7787c5fb918
+# Source0-md5:	db736e080858a7c34357960254dda280
 URL:		http://tukaani.org/lzma/
 BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -100,13 +100,15 @@ Biblioteka statyczna LZMA.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/%{_lib}
+install -d $RPM_BUILD_ROOT/{etc/env.d,%{_lib}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_libdir}/liblzma.so.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/liblzma.so.0.0.0 $RPM_BUILD_ROOT%{_libdir}/liblzma.so
+
+echo '#LZMA_OPT="--threads=2"' > $RPM_BUILD_ROOT/etc/env.d/LZMA_OPT
 
 %find_lang %{name}
 
@@ -118,6 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/LZMA_OPT
 %attr(755,root,root) %{_bindir}/*lz*
 %{_mandir}/man1/lz*.1*
 
