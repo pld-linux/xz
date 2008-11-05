@@ -7,12 +7,13 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.999.5
-Release:	0.%{snap}.1
+Release:	0.%{snap}.2
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
 # Source0-md5:	db736e080858a7c34357960254dda280
+Patch0:		%{name}-memlimit.patch
 URL:		http://tukaani.org/lzma/
 BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -90,6 +91,7 @@ Biblioteka statyczna LZMA.
 
 %prep
 %setup -q -n %{name}-%{version}%{snap}
+%patch0 -p1
 
 %build
 %configure
