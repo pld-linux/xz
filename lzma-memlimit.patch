@@ -1,0 +1,44 @@
+--- lzma-4.999.5alpha/src/lzma/args.c.org	2008-11-05 17:48:00.636975812 +0100
++++ lzma-4.999.5alpha/src/lzma/args.c	2008-11-05 17:50:22.929253472 +0100
+@@ -179,7 +179,9 @@
+ 		// --memory
+ 		case 'M':
+ 			opt_memory = str_to_uint64("memory", optarg,
+-					1, SIZE_MAX);
++					0, SIZE_MAX);
++			if (opt_memory == 0)
++				opt_memory = SIZE_MAX;
+ 			break;
+ 
+ 		case 'N':
+--- lzma-4.999.5alpha/src/lzma/help.c~	2008-09-04 10:02:46.000000000 +0200
++++ lzma-4.999.5alpha/src/lzma/help.c	2008-11-05 17:52:02.573618564 +0100
+@@ -111,7 +111,7 @@
+ 	puts(_(
+ " Resource usage options:\n"
+ "\n"
+-"  -M, --memory=NUM    use roughly NUM bytes of memory at maximum\n"
++"  -M, --memory=NUM    use roughly NUM bytes of memory at maximum (0 is unlimited)\n"
+ "  -T, --threads=NUM   use a maximum of NUM (de)compression threads\n"
+ // "      --threading=STR threading style; possible values are `auto' (default),\n"
+ // "                      `files', and `stream'
+--- lzma-4.999.5alpha/src/lzmadec/lzmadec.c~	2008-09-06 13:40:40.000000000 +0200
++++ lzma-4.999.5alpha/src/lzmadec/lzmadec.c	2008-11-05 17:53:17.588819403 +0100
+@@ -95,7 +95,7 @@
+ "  -k, --keep         (ignored)\n"
+ "  -f, --force        allow reading compressed data from a terminal\n"
+ "  -M, --memory=NUM   use NUM bytes of memory at maximum; the suffixes\n"
+-"                     k, M, G, Ki, Mi, and Gi are supported.\n"
++"                     k, M, G, Ki, Mi, and Gi are supported. 0 means unlimited.\n"
+ "      --format=FMT   accept only files in the given file format;\n"
+ "                     possible FMTs are `auto', `native', and alone',\n"
+ "  -h, --help         display this help and exit\n"
+@@ -264,6 +264,8 @@
+ 
+ 		case 'M':
+ 			memlimit = str_to_size(optarg);
++			if (memlimit == 0)
++				memlimit = SIZE_MAX;
+ 			break;
+ 
+ 		case 'h':
