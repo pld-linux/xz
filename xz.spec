@@ -16,6 +16,7 @@ Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
 Patch0:		%{name}-memlimit.patch
 URL:		http://tukaani.org/lzma/
 BuildRequires:	rpmbuild(macros) >= 1.402
+Conflicts:	rpm < 4.4.9
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
