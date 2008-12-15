@@ -16,6 +16,8 @@ Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
 Patch0:		%{name}-memlimit.patch
 URL:		http://tukaani.org/lzma/
 BuildRequires:	rpmbuild(macros) >= 1.402
+BuildRequires:	sed >= 4.0
+Suggests:	mktemp
 Conflicts:	rpm < 4.4.9
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -93,6 +95,7 @@ Biblioteka statyczna LZMA.
 %prep
 %setup -q -n %{name}-%{version}%{snap}
 %patch0 -p1
+sed -i 's|/usr/bin/mktemp|/bin/mktemp|' scripts/lzdiff
 
 %build
 %configure
