@@ -7,7 +7,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		lzma
 Version:	4.999.5
-Release:	0.%{snap}.3
+Release:	0.%{snap}.4
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
@@ -95,7 +95,7 @@ Biblioteka statyczna LZMA.
 %prep
 %setup -q -n %{name}-%{version}%{snap}
 %patch0 -p1
-sed -i 's|/usr/bin/mktemp|/bin/mktemp|' scripts/lzdiff
+sed -i 's|/usr/bin/mktemp|/bin/mktemp|' src/scripts/lzdiff
 
 %build
 %configure
