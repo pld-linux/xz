@@ -2,19 +2,18 @@
 # Conditional build:
 %bcond_without	tests	# don't perform make check
 #
-%define	snap	alpha
+%define	snap	beta
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
-Name:		lzma
-Version:	4.999.5
+Name:		xz
+Version:	4.999.7
 Release:	0.%{snap}.4
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
-# Source0-md5:	db736e080858a7c34357960254dda280
-Patch0:		%{name}-memlimit.patch
-URL:		http://tukaani.org/lzma/
+# Source0-md5:	be561c1c5597cfa2aa6122854492b2ce
+URL:		http://tukaani.org/xz/
 BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRequires:	sed >= 4.0
 Suggests:	mktemp
@@ -94,7 +93,6 @@ Biblioteka statyczna LZMA.
 
 %prep
 %setup -q -n %{name}-%{version}%{snap}
-%patch0 -p1
 sed -i 's|/usr/bin/mktemp|/bin/mktemp|' src/scripts/lzdiff
 
 %build
@@ -114,9 +112,10 @@ install -d $RPM_BUILD_ROOT/{etc/env.d,%{_lib}}
 mv -f $RPM_BUILD_ROOT%{_libdir}/liblzma.so.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/liblzma.so.0.0.0 $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
-echo '#LZMA_OPT="--threads=2"' > $RPM_BUILD_ROOT/etc/env.d/LZMA_OPT
+echo '#XZ_OPT="--threads=2"' > $RPM_BUILD_ROOT/etc/env.d/XZ_OPT
 
-%find_lang %{name}
+:> %{name}.lang
+#%%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -126,14 +125,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/LZMA_OPT
+%config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/XZ_OPT
 %attr(755,root,root) %{_bindir}/*lz*
+%attr(755,root,root) %{_bindir}/*xz*
 %{_mandir}/man1/lz*.1*
 
 %files libs -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING README THANKS TODO
-%doc doc/{bugs,faq,file-format,history,lzma-intro}.txt
+%doc AUTHORS COPYING README THANKS
+%doc doc/{bugs,file-format}.txt
 %attr(755,root,root) /%{_lib}/liblzma.so.*.*.*
 %attr(755,root,root) %ghost /%{_lib}/liblzma.so.0
 
@@ -144,7 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/liblzma.la
 %{_includedir}/lzma.h
 %{_includedir}/lzma
-%{_pkgconfigdir}/lzma.pc
+%{_pkgconfigdir}/liblzma.pc
 
 %files static
 %defattr(644,root,root,755)
