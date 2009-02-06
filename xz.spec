@@ -18,6 +18,8 @@ BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRequires:	sed >= 4.0
 Suggests:	mktemp
 Conflicts:	rpm < 4.4.9
+Provides:	lzma = %{epoch}:%{version}-%{release}
+Obsoletes:	lzma < 1:4.999.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -60,6 +62,8 @@ Cechy LZMA:
 Summary:	LZMA shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona LZMA
 Group:		Libraries
+Provides:	lzma-libs = %{epoch}:%{version}-%{release}
+Obsoletes:	lzma-libs < 1:4.999.6
 
 %description libs
 LZMA shared library.
@@ -72,6 +76,8 @@ Summary:	Header file for LZMA library
 Summary(pl.UTF-8):	Plik nagłówkowy biblioteki LZMA
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Provides:	lzma-devel = %{epoch}:%{version}-%{release}
+Obsoletes:	lzma-devel < 1:4.999.6
 
 %description devel
 Header file for LZMA library.
@@ -84,6 +90,8 @@ Summary:	LZMA static library
 Summary(pl.UTF-8):	Biblioteka statyczna LZMA
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Provides:	lzma-static = %{epoch}:%{version}-%{release}
+Obsoletes:	lzma-static < 1:4.999.6
 
 %description static
 LZMA static library.
