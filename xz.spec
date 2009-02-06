@@ -7,7 +7,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
 Version:	4.999.7
-Release:	0.%{snap}.4
+Release:	0.%{snap}.5
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
@@ -147,7 +147,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/liblzma-*.txt
 %attr(755,root,root) %{_libdir}/liblzma.so
 %{_libdir}/liblzma.la
 %{_includedir}/lzma.h
