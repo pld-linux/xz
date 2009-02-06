@@ -7,7 +7,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
 Version:	4.999.7
-Release:	0.%{snap}.5
+Release:	0.%{snap}.6
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
@@ -18,6 +18,7 @@ BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRequires:	sed >= 4.0
 Suggests:	mktemp
 Conflicts:	rpm < 4.4.9
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Provides:	lzma = %{epoch}:%{version}-%{release}
 Obsoletes:	lzma < 1:4.999.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
