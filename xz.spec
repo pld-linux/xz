@@ -6,13 +6,13 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
-Version:	4.999.7
-Release:	0.%{snap}.6
+Version:	4.999.8
+Release:	0.%{snap}.1
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
-Source0:	http://tukaani.org/lzma/%{name}-%{version}%{snap}.tar.gz
-# Source0-md5:	be561c1c5597cfa2aa6122854492b2ce
+Source0:	http://tukaani.org/xz/%{name}-%{version}%{snap}.tar.gz
+# Source0-md5:	f00967331a487e88d51207fe17c56f52
 URL:		http://tukaani.org/xz/
 BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRequires:	sed >= 4.0
