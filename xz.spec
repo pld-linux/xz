@@ -6,13 +6,13 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
-Version:	4.999.8
+Version:	4.999.9
 Release:	0.%{snap}.1
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	http://tukaani.org/xz/%{name}-%{version}%{snap}.tar.gz
-# Source0-md5:	f00967331a487e88d51207fe17c56f52
+# Source0-md5:	f2073579b6da2fe35d453adee1aaf1b2
 URL:		http://tukaani.org/xz/
 BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRequires:	sed >= 4.0
@@ -102,7 +102,6 @@ Biblioteka statyczna LZMA.
 
 %prep
 %setup -q -n %{name}-%{version}%{snap}
-sed -i 's|/usr/bin/mktemp|/bin/mktemp|' src/scripts/lzdiff
 
 %build
 %configure
@@ -137,12 +136,13 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/XZ_OPT
 %attr(755,root,root) %{_bindir}/*lz*
 %attr(755,root,root) %{_bindir}/*xz*
-%{_mandir}/man1/lz*.1*
+%{_mandir}/man1/[lx]z*.1*
+%{_mandir}/man1/un[lx]z*.1*
 
 %files libs -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING README THANKS
-%doc doc/{bugs,file-format}.txt
+%doc doc/*.txt
 %attr(755,root,root) /%{_lib}/liblzma.so.*.*.*
 %attr(755,root,root) %ghost /%{_lib}/liblzma.so.0
 
