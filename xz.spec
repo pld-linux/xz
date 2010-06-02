@@ -1,7 +1,14 @@
 #
 # Conditional build:
 %bcond_without	tests	# don't perform make check
-%bcond_without	asm		# asm optimizations
+%bcond_without	asm		# ix86 asm optimizations
+
+%ifnarch %{ix86}
+# Speed-optimized CRC64 using slicing-by-four algorithm. This uses only i386
+# instructions, but it is optimized for i686 and later (including e.g. Pentium
+# II/III/IV, Athlon XP, and Core 2).
+%undefine	with_asm
+%endif
 
 %if "%{pld_release}" == "ac"
 %undefine	with_asm
