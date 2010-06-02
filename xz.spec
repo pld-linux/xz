@@ -1,27 +1,36 @@
 #
 # Conditional build:
 %bcond_without	tests	# don't perform make check
-#
-%define	snap	beta
+%bcond_without	asm		# asm optimizations
+
+%if "%{pld_release}" == "ac"
+%undefine	with_asm
+%endif
+
+%define		subver	beta
+%define		rel		2
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
 Version:	4.999.9
-Release:	0.%{snap}.2
+Release:	0.%{subver}.%{rel}
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
-Source0:	http://tukaani.org/xz/%{name}-%{version}%{snap}.tar.gz
+Source0:	http://tukaani.org/xz/%{name}-%{version}%{subver}.tar.gz
 # Source0-md5:	f2073579b6da2fe35d453adee1aaf1b2
 URL:		http://tukaani.org/xz/
+%{?with_asm:BuildRequires:	gcc >= 5:3.4}
+BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRequires:	sed >= 4.0
-Suggests:	mktemp
-Conflicts:	rpm < 4.4.9
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Suggests:	mktemp
 Provides:	lzma = %{epoch}:%{version}-%{release}
 Obsoletes:	lzma < 1:4.999.6
+Conflicts:	rpm < 4.4.9
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
 
 %description
 LZMA is default and general compression method of 7z format in 7-Zip
@@ -101,11 +110,11 @@ LZMA static library.
 Biblioteka statyczna LZMA.
 
 %prep
-%setup -q -n %{name}-%{version}%{snap}
+%setup -q -n %{name}-%{version}%{subver}
 
 %build
-%configure
-
+%configure \
+	%{!?with_asm:--disable-assembler}
 %{__make}
 
 %{?with_tests:%{__make} check}
