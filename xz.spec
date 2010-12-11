@@ -14,18 +14,16 @@
 %undefine	with_asm
 %endif
 
-%define		subver	beta
-%define		rel		2
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
-Version:	4.999.9
-Release:	0.%{subver}.%{rel}
+Version:	5.0.0
+Release:	1
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
-Source0:	http://tukaani.org/xz/%{name}-%{version}%{subver}.tar.gz
-# Source0-md5:	f2073579b6da2fe35d453adee1aaf1b2
+Source0:	http://tukaani.org/xz/%{name}-%{version}.tar.gz
+# Source0-md5:	f3c0706d100ad2b6d63327584d026c50
 URL:		http://tukaani.org/xz/
 %{?with_asm:BuildRequires:	gcc >= 5:3.4}
 BuildRequires:	rpm >= 4.4.9-56
@@ -117,7 +115,7 @@ LZMA static library.
 Biblioteka statyczna LZMA.
 
 %prep
-%setup -q -n %{name}-%{version}%{subver}
+%setup -q
 
 %build
 %configure \
@@ -134,7 +132,7 @@ install -d $RPM_BUILD_ROOT/{etc/env.d,%{_lib}}
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_libdir}/liblzma.so.* $RPM_BUILD_ROOT/%{_lib}
-ln -sf /%{_lib}/liblzma.so.0.0.0 $RPM_BUILD_ROOT%{_libdir}/liblzma.so
+ln -sf /%{_lib}/liblzma.so.5.0.0 $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
 echo '#XZ_OPT="--threads=2"' > $RPM_BUILD_ROOT/etc/env.d/XZ_OPT
 
@@ -160,7 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING README THANKS
 %doc doc/*.txt
 %attr(755,root,root) /%{_lib}/liblzma.so.*.*.*
-%attr(755,root,root) %ghost /%{_lib}/liblzma.so.0
+%attr(755,root,root) %ghost /%{_lib}/liblzma.so.5
 
 %files devel
 %defattr(644,root,root,755)
