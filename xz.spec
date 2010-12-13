@@ -136,8 +136,7 @@ ln -sf /%{_lib}/liblzma.so.5.0.0 $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
 echo '#XZ_OPT="--threads=2"' > $RPM_BUILD_ROOT/etc/env.d/XZ_OPT
 
-:> %{name}.lang
-#%%find_lang %{name}
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -145,15 +144,19 @@ rm -rf $RPM_BUILD_ROOT
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/XZ_OPT
-%attr(755,root,root) %{_bindir}/*lz*
-%attr(755,root,root) %{_bindir}/*xz*
-%{_mandir}/man1/[lx]z*.1*
-%{_mandir}/man1/un[lx]z*.1*
+%attr(755,root,root) %{_bindir}/lz*
+%attr(755,root,root) %{_bindir}/unlzma
+%attr(755,root,root) %{_bindir}/unxz
+%attr(755,root,root) %{_bindir}/xz*
+%{_mandir}/man1/lz*.1*
+%{_mandir}/man1/unlzma.1*
+%{_mandir}/man1/unxz.1*
+%{_mandir}/man1/xz*.1*
 
-%files libs -f %{name}.lang
+%files libs
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING README THANKS
 %doc doc/*.txt
