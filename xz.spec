@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	tests	# don't perform make check
-%bcond_without	asm		# ix86 asm optimizations
+%bcond_without	asm	# ix86 asm optimizations
 
 %ifnarch %{ix86}
 # Speed-optimized CRC64 using slicing-by-four algorithm. This uses only i386
@@ -24,6 +24,7 @@ License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	http://tukaani.org/xz/%{name}-%{version}.tar.gz
 # Source0-md5:	60044a5701997e4e0904257197208ea9
+Source1:	xz-pl.po
 URL:		http://tukaani.org/xz/
 %{?with_asm:BuildRequires:	gcc >= 5:3.4}
 BuildRequires:	rpm >= 4.4.9-56
@@ -35,7 +36,6 @@ Provides:	lzma = %{epoch}:%{version}-%{release}
 Obsoletes:	lzma < 1:4.999.6
 Conflicts:	rpm < 4.4.9
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
 
 %description
 LZMA is default and general compression method of 7z format in 7-Zip
@@ -117,6 +117,11 @@ Biblioteka statyczna LZMA.
 %prep
 %setup -q
 
+[ ! -f po/pl.po ] || exit 1
+cp %{SOURCE1} po/pl.po
+echo "pl" >> po/LINGUAS
+%{__rm} po/stamp-po
+
 %build
 %configure \
 	%{!?with_asm:--disable-assembler}
@@ -132,7 +137,7 @@ install -d $RPM_BUILD_ROOT/{etc/env.d,%{_lib}}
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_libdir}/liblzma.so.* $RPM_BUILD_ROOT/%{_lib}
-ln -sf /%{_lib}/liblzma.so.5.0.0 $RPM_BUILD_ROOT%{_libdir}/liblzma.so
+ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
 echo '#XZ_OPT="--threads=2"' > $RPM_BUILD_ROOT/etc/env.d/XZ_OPT
 
