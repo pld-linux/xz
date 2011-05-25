@@ -1,39 +1,19 @@
-#
-# Conditional build:
-%bcond_without	tests	# don't perform make check
-%bcond_without	asm	# ix86 asm optimizations
-
-%ifnarch %{ix86}
-# Speed-optimized CRC64 using slicing-by-four algorithm. This uses only i386
-# instructions, but it is optimized for i686 and later (including e.g. Pentium
-# II/III/IV, Athlon XP, and Core 2).
-%undefine	with_asm
-%endif
-
-%if "%{pld_release}" == "ac"
-%undefine	with_asm
-%endif
-
 Summary:	LZMA Encoder/Decoder
-Summary(pl.UTF-8):	Koder/Dekoder LZMA
-Name:		xz
-Version:	5.0.3
-Release:	1
-Epoch:		1
-License:	LGPL v2.1+, helper scripts on GPL v2+
+Summary(pl):	Koder/Dekoder LZMA
+Name:		lzma
+Version:	4.43
+Release:	5
+License:	CPL/LGPL
 Group:		Applications/Archiving
-Source0:	http://tukaani.org/xz/%{name}-%{version}.tar.bz2
-# Source0-md5:	8d900b742b94fa9e708ca4f5a4b29003
-URL:		http://tukaani.org/xz/
-%{?with_asm:BuildRequires:	gcc >= 5:3.4}
-BuildRequires:	rpm >= 4.4.9-56
-BuildRequires:	rpmbuild(macros) >= 1.402
-BuildRequires:	sed >= 4.0
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Suggests:	mktemp
-Provides:	lzma = %{epoch}:%{version}-%{release}
-Obsoletes:	lzma < 1:4.999.6
-Conflicts:	rpm < 4.4.9
+Source0:	http://dl.sourceforge.net/sevenzip/%{name}443.tar.bz2
+# Source0-md5:	c4e1b467184c7cffd4371c74df2baf0f
+Patch0:		%{name}-quiet.patch
+Patch1:		%{name}427_zlib.patch
+Patch2:		%{name}-shared.patch
+Patch3:		%{name}-lzmalib.patch
+URL:		http://www.7-zip.org/sdk.html
+BuildRequires:	libstdc++-devel
+# does not need -libs, due apps being not linked with shared lib
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -54,88 +34,104 @@ LZMA features:
 - Small code size for decompressing: 2-8 KB (depending from speed
   optimizations)
 
-%description -l pl.UTF-8
-LZMA jest domyÅ›lnym i ogÃ³lnym algorytmem kompresji formatu 7z
-stosowanego przez 7-Zip. LZMA zapewnia wysoki stopieÅ„ kompresji i
-bardzo szybkÄ… dekompresjÄ™, wiÄ™c nadaje siÄ™ do zastosowaÅ„ osadzonych.
-PrzykÅ‚adowo, moÅ¼e byÄ‡ uÅ¼yty do kompresji ROM-u (firmware'u).
+%description -l pl
+LZMA jest domy¶lnym i ogólnym algorytmem kompresji formatu 7z
+stosowanego przez 7-Zip. LZMA zapewnia wysoki stopieñ kompresji i
+bardzo szybk± dekompresjê, wiêc nadaje siê do zastosowañ osadzonych.
+Przyk³adowo, mo¿e byæ u¿yty do kompresji ROM-u (firmware'u).
 
 Cechy LZMA:
 
-- SzybkoÅ›Ä‡ kompresowania: 500 KB/s na 1 GHz procesorze,
-- SzybkoÅ›Ä‡ dekompresowania:
+- Szybko¶æ kompresowania: 500 KB/s na 1 GHz procesorze,
+- Szybko¶æ dekompresowania:
   - 8-12 MB/s na 1 GHz Pentium 3 lub Athlonie,
   - 500-1000 KB/s na 100 MHz procesorach ARM, MIPS, PowerPC lub innych
     prostych RISC-ach,
-- MaÅ‚a iloÅ›Ä‡ pamiÄ™ci potrzebna do dekompresowania: 8-32 KB + rozmiar
-  sÅ‚ownika,
-- MaÅ‚y rozmiar kodu dekompresujÄ…cego: 2-8 KB (w zaleÅ¼noÅ›ci od opcji
+- Ma³a ilo¶æ pamiêci potrzebna do dekompresowania: 8-32 KB + rozmiar
+  s³ownika,
+- Ma³y rozmiar kodu dekompresuj±cego: 2-8 KB (w zale¿no¶ci od opcji
   optymalizacji).
 
 %package libs
 Summary:	LZMA shared library
-Summary(pl.UTF-8):	Biblioteka wspÃ³Å‚dzielona LZMA
+Summary(pl):	Biblioteka LZMA
 Group:		Libraries
-Provides:	lzma-libs = %{epoch}:%{version}-%{release}
-Obsoletes:	lzma-libs < 1:4.999.6
 
 %description libs
-LZMA shared library.
-
-%description libs -l pl.UTF-8
-Biblioteka wspÃ³Å‚dzielona LZMA.
+LZMA shared library
 
 %package devel
-Summary:	Header file for LZMA library
-Summary(pl.UTF-8):	Plik nagÅ‚Ã³wkowy biblioteki LZMA
+Summary:	LZMA library
+Summary(pl):	Biblioteka LZMA
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Provides:	lzma-devel = %{epoch}:%{version}-%{release}
-Obsoletes:	lzma-devel < 1:4.999.6
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
-Header file for LZMA library.
+LZMA Library.
 
-%description devel -l pl.UTF-8
-Plik nagÅ‚Ã³wkowy biblioteki LZMA.
+%description devel -l pl
+Biblioteka LZMA.
 
 %package static
 Summary:	LZMA static library
-Summary(pl.UTF-8):	Biblioteka statyczna LZMA
+Summary(pl):	Biblioteka LZMA
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
-Provides:	lzma-static = %{epoch}:%{version}-%{release}
-Obsoletes:	lzma-static < 1:4.999.6
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-LZMA static library.
-
-%description static -l pl.UTF-8
-Biblioteka statyczna LZMA.
+Static LZMA Library.
 
 %prep
-%setup -q
+%setup -q -c
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-%configure \
-	%{!?with_asm:--disable-assembler}
-%{__make}
+cd C/7zip/Compress/LZMA_Alone
+%{__make} -f makefile.gcc \
+	CXX="%{__cxx}" \
+	CXX_C="%{__cc}" \
+	CFLAGS="%{rpmcflags} -c -I ../../.." \
+	LDFLAGS="%{rpmldflags}" \
+	LIB="-lm"
 
-%{?with_tests:%{__make} check}
+cat ../LZMA/* > test1
+cat lzma *.o > test2
+tar cf test3 ../../../../*
+./lzma e test1 test4
+./lzma e test2 test5
+./lzma e test3 test6
+./lzma d test4 test7
+./lzma d test5 test8
+./lzma d test6 test9
+cmp test1 test7
+cmp test2 test8
+cmp test3 test9
+
+%{__make} -f makefile.gcc clean
+
+%{__make} -f makefile.gcc \
+	CXX="%{__cxx}" \
+	CXX_C="%{__cc}" \
+	CFLAGS="%{rpmcflags} -c -I ../../.." \
+	LDFLAGS="%{rpmldflags}"
+
+cd ../LZMA_Lib
+%{__make} -f makefile \
+	CXX="%{__cxx}" \
+	CFLAGS="%{rpmcflags} -c"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{etc/env.d,%{_lib}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir}}
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
-
-mv -f $RPM_BUILD_ROOT%{_libdir}/liblzma.so.* $RPM_BUILD_ROOT/%{_lib}
-ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
-
-echo '#XZ_OPT="--threads=2"' > $RPM_BUILD_ROOT/etc/env.d/XZ_OPT
-
-%find_lang %{name}
+install C/7zip/Compress/LZMA_Alone/lzma $RPM_BUILD_ROOT%{_bindir}
+install C/7zip/Compress/LZMA_Lib/lzmalib.h $RPM_BUILD_ROOT%{_includedir}
+install C/7zip/Compress/LZMA_Lib/liblzma.a $RPM_BUILD_ROOT%{_libdir}
+install C/7zip/Compress/LZMA_Lib/liblzma.so.*.*.* $RPM_BUILD_ROOT%{_libdir}
+ln -s $(cd C/7zip/Compress/LZMA_Lib; echo liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -143,32 +139,19 @@ rm -rf $RPM_BUILD_ROOT
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
-%files -f %{name}.lang
+%files
 %defattr(644,root,root,755)
-%config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/XZ_OPT
-%attr(755,root,root) %{_bindir}/lz*
-%attr(755,root,root) %{_bindir}/unlzma
-%attr(755,root,root) %{_bindir}/unxz
-%attr(755,root,root) %{_bindir}/xz*
-%{_mandir}/man1/lz*.1*
-%{_mandir}/man1/unlzma.1*
-%{_mandir}/man1/unxz.1*
-%{_mandir}/man1/xz*.1*
+%doc history.txt lzma.txt
+%attr(755,root,root) %{_bindir}/*
 
 %files libs
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING README THANKS
-%doc doc/*.txt
-%attr(755,root,root) /%{_lib}/liblzma.so.*.*.*
-%attr(755,root,root) %ghost /%{_lib}/liblzma.so.5
+%attr(755,root,root) %{_libdir}/liblzma.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liblzma.so
-%{_libdir}/liblzma.la
-%{_includedir}/lzma.h
-%{_includedir}/lzma
-%{_pkgconfigdir}/liblzma.pc
+%{_includedir}/lzmalib.h
+%{_libdir}/liblzma.so
 
 %files static
 %defattr(644,root,root,755)
