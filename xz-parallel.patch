@@ -5,7 +5,7 @@
  makes
  .B xz
 -use as many threads as there are CPU cores on the system.
-+use as many threads as there are CPU cores on the system (default).
++use as many threads as there are CPU cores on the system (default in PLD).
  The actual number of threads can be less than
  .I threads
  if the input file is not big enough
