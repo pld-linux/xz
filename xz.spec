@@ -17,13 +17,13 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
-Version:	5.0.3
+Version:	5.1.1
 Release:	1
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
-Source0:	http://tukaani.org/xz/%{name}-%{version}.tar.bz2
-# Source0-md5:	8d900b742b94fa9e708ca4f5a4b29003
+Source0:	http://tukaani.org/xz/%{name}-%{version}alpha.tar.gz
+# Source0-md5:	bb24436fa12780808e1c142980484104
 URL:		http://tukaani.org/xz/
 %{?with_asm:BuildRequires:	gcc >= 5:3.4}
 BuildRequires:	rpm >= 4.4.9-56
@@ -114,7 +114,7 @@ LZMA static library.
 Biblioteka statyczna LZMA.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}alpha
 
 %build
 %configure \
