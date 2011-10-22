@@ -1,0 +1,22 @@
+--- xz-5.1.1alpha/src/xz/hardware.c~	2011-04-12 12:42:58.000000000 +0200
++++ xz-5.1.1alpha/src/xz/hardware.c	2011-10-22 23:06:21.399474735 +0200
+@@ -16,7 +16,7 @@
+ 
+ /// Maximum number of worker threads. This can be set with
+ /// the --threads=NUM command line option.
+-static uint32_t threads_max = 1;
++static uint32_t threads_max = 0;
+ 
+ /// Memory usage limit for compression
+ static uint64_t memlimit_compress;
+--- xz-5.1.1alpha/src/xz/xz.1~	2011-04-12 12:42:58.000000000 +0200
++++ xz-5.1.1alpha/src/xz/xz.1	2011-10-22 23:07:14.357449738 +0200
+@@ -913,7 +913,7 @@
+ .B 0
+ makes
+ .B xz
+-use as many threads as there are CPU cores on the system.
++use as many threads as there are CPU cores on the system (default).
+ The actual number of threads can be less than
+ .I threads
+ if the input file is not big enough
