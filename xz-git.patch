@@ -1,0 +1,52 @@
+commit 6b620a0f0813d28c3c544b4ff8cb595b38a6e908
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   Sun Oct 23 17:05:55 2011 +0300
+
+    liblzma: Fix a deadlock in the threaded encoder.
+    
+    It was triggered when reinitializing the encoder,
+    e.g. when encoding two files.
+
+diff --git a/src/liblzma/common/stream_encoder_mt.c b/src/liblzma/common/stream_encoder_mt.c
+index 323f04a..a4b2800 100644
+--- a/src/liblzma/common/stream_encoder_mt.c
++++ b/src/liblzma/common/stream_encoder_mt.c
+@@ -295,8 +295,10 @@ worker_start(void *thr_ptr)
+ 			while (true) {
+ 				// The thread is already idle so if we are
+ 				// requested to stop, just set the state.
+-				if (thr->state == THR_STOP)
++				if (thr->state == THR_STOP) {
+ 					thr->state = THR_IDLE;
++					pthread_cond_signal(&thr->cond);
++				}
+ 
+ 				state = thr->state;
+ 				if (state != THR_IDLE)
+commit ab50ae3ef40c81e5bf613905ca3fd636548b75e7
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   Sun Oct 23 17:08:14 2011 +0300
+
+    liblzma: Fix invalid free() in the threaded encoder.
+    
+    It was triggered if initialization failed e.g. due to
+    running out of memory.
+    
+    Thanks to Arkadiusz Miskiewicz.
+
+diff --git a/src/liblzma/common/outqueue.c b/src/liblzma/common/outqueue.c
+index b9eac16..d7a87d9 100644
+--- a/src/liblzma/common/outqueue.c
++++ b/src/liblzma/common/outqueue.c
+@@ -101,7 +101,11 @@ extern void
+ lzma_outq_end(lzma_outq *outq, lzma_allocator *allocator)
+ {
+ 	lzma_free(outq->bufs, allocator);
++	outq->bufs = NULL;
++
+ 	lzma_free(outq->bufs_mem, allocator);
++	outq->bufs_mem = NULL;
++
+ 	return;
+ }
+ 
