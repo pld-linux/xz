@@ -17,6 +17,6 @@
  	// Set the defaults.
 +	hardware_threads_set(0);
  	hardware_memlimit_set(0, true, true, false);
-+	hardware_memlimit_set(90, true, false, true);
++	hardware_memlimit_set(80, true, false, true);
  	return;
  }
