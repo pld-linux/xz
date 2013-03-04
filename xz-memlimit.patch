@@ -1,0 +1,11 @@
+--- xz-5.1.2alpha/src/xz/hardware.c~	2013-03-04 12:15:50.213198740 +0100
++++ xz-5.1.2alpha/src/xz/hardware.c	2013-03-04 12:17:34.172318119 +0100
+@@ -62,4 +62,8 @@
+ 		new_memlimit = (uint32_t)new_memlimit * total_ram / 100;
+ 	}
++ 
++	// limit to some sane value (in case of 64bit host and 32bit processes)
++	if (new_memlimit >= SIZE_MAX/100 * 95)
++ 		new_memlimit = SIZE_MAX/100 * 95;
+ 
+ 	if (set_compress)
