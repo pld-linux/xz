@@ -129,10 +129,14 @@ Biblioteka statyczna LZMA.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{etc/env.d,%{_lib}}
-
+install -d $RPM_BUILD_ROOT{/etc/env.d,/%{_lib}}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
+
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -a doc/examples*  $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 mv -f $RPM_BUILD_ROOT%{_libdir}/liblzma.so.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
@@ -173,6 +177,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/lzma.h
 %{_includedir}/lzma
 %{_pkgconfigdir}/liblzma.pc
+%{_examplesdir}/%{name}-%{version}
 
 %files static
 %defattr(644,root,root,755)
