@@ -26,12 +26,10 @@ Source0:	http://tukaani.org/xz/%{name}-%{version}.tar.gz
 # Source0-md5:	be585bdf8672e4406632eda3d819e284
 Patch0:		%{name}-parallel.patch
 Patch1:		%{name}-memlimit.patch
-Patch2:		%{name}-pl.po-update.patch
 URL:		http://tukaani.org/xz/
 %{?with_asm:BuildRequires:	gcc >= 5:3.4}
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.402
-BuildRequires:	sed >= 4.0
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Suggests:	mktemp
 Provides:	lzma = %{epoch}:%{version}-%{release}
@@ -120,7 +118,6 @@ Biblioteka statyczna LZMA.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-#%patch2 -p1
 
 %build
 %configure \
