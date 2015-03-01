@@ -17,13 +17,13 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
-Version:	5.2.0
-Release:	2
+Version:	5.2.1
+Release:	1
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	http://tukaani.org/xz/%{name}-%{version}.tar.gz
-# Source0-md5:	be585bdf8672e4406632eda3d819e284
+# Source0-md5:	3e44c766c3fb4f19e348e646fcd5778a
 Patch0:		%{name}-parallel.patch
 Patch1:		%{name}-memlimit.patch
 URL:		http://tukaani.org/xz/
