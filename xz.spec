@@ -161,6 +161,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/unlzma.1*
 %{_mandir}/man1/unxz.1*
 %{_mandir}/man1/xz*.1*
+%lang(de) %{_mandir}/de/man1/lz*.1*
+%lang(de) %{_mandir}/de/man1/unlzma.1*
+%lang(de) %{_mandir}/de/man1/unxz.1*
+%lang(de) %{_mandir}/de/man1/xz*.1*
 
 %files libs
 %defattr(644,root,root,755)
