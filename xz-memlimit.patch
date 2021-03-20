@@ -1,6 +1,8 @@
---- xz-5.1.2alpha/src/xz/hardware.c~	2013-03-04 12:15:50.213198740 +0100
-+++ xz-5.1.2alpha/src/xz/hardware.c	2013-03-04 12:17:34.172318119 +0100
-@@ -62,4 +62,8 @@
+diff -urNp -x '*.orig' xz-5.2.5.org/src/xz/hardware.c xz-5.2.5/src/xz/hardware.c
+--- xz-5.2.5.org/src/xz/hardware.c	2021-03-21 00:19:11.655899186 +0100
++++ xz-5.2.5/src/xz/hardware.c	2021-03-21 00:19:11.892899186 +0100
+@@ -67,6 +67,10 @@ hardware_memlimit_set(uint64_t new_memli
+ 		assert(new_memlimit <= 100);
  		new_memlimit = (uint32_t)new_memlimit * total_ram / 100;
  	}
 + 
@@ -8,4 +10,5 @@
 +	if (new_memlimit >= SIZE_MAX/100 * 95)
 + 		new_memlimit = SIZE_MAX/100 * 95;
  
- 	if (set_compress)
+ 	if (set_compress) {
+ 		memlimit_compress = new_memlimit;
