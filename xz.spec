@@ -17,13 +17,13 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
-Version:	5.2.5
-Release:	2
+Version:	5.2.6
+Release:	1
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	https://tukaani.org/xz/%{name}-%{version}.tar.bz2
-# Source0-md5:	33ab3ef79aa1146b83b778210e7b0a54
+# Source0-md5:	2138d1c1ccd9cc4c972fd89cff0bb2b4
 Patch0:		%{name}-parallel.patch
 Patch1:		%{name}-memlimit.patch
 URL:		https://tukaani.org/xz/
@@ -140,6 +140,8 @@ cp -a doc/examples*  $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 mv -f $RPM_BUILD_ROOT%{_libdir}/liblzma.so.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/liblzma.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/liblzma.so
 
+mv $RPM_BUILD_ROOT%{_mandir}/fr{_FR,}
+
 echo '#XZ_OPT="--threads=2"' > $RPM_BUILD_ROOT/etc/env.d/XZ_OPT
 
 %find_lang %{name}
@@ -165,6 +167,10 @@ rm -rf $RPM_BUILD_ROOT
 %lang(de) %{_mandir}/de/man1/unlzma.1*
 %lang(de) %{_mandir}/de/man1/unxz.1*
 %lang(de) %{_mandir}/de/man1/xz*.1*
+%lang(fr) %{_mandir}/fr/man1/lz*.1*
+%lang(fr) %{_mandir}/fr/man1/unlzma.1*
+%lang(fr) %{_mandir}/fr/man1/unxz.1*
+%lang(fr) %{_mandir}/fr/man1/xz*.1*
 
 %files libs
 %defattr(644,root,root,755)
