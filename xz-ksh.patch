@@ -1,0 +1,12 @@
+Be graceful to some ksh-originated shells (only mksh >= 40b seems to have a fix for RH BZ#49691)
+--- xz-5.2.6/src/scripts/xzgrep.in.orig	2022-08-12 12:48:29.000000000 +0200
++++ xz-5.2.6/src/scripts/xzgrep.in	2022-08-16 19:01:35.106707142 +0200
+@@ -209,7 +209,7 @@ for i; do
+       # which prints "binary file matches" to stderr instead of stdout.
+       #
+       # If reading from stdin, let grep use whatever name it prefers for
+-      # stdin. With GNU grep it's a locale-specific translated string.
++      # stdin. With GNU grep it is a locale-specific translated string.
+       if test "x$i" = "x-"; then
+         eval "$grep -H"
+       else

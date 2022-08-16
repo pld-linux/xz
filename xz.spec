@@ -26,6 +26,7 @@ Source0:	https://tukaani.org/xz/%{name}-%{version}.tar.bz2
 # Source0-md5:	2138d1c1ccd9cc4c972fd89cff0bb2b4
 Patch0:		%{name}-parallel.patch
 Patch1:		%{name}-memlimit.patch
+Patch2:		%{name}-ksh.patch
 URL:		https://tukaani.org/xz/
 %{?with_asm:BuildRequires:	gcc >= 5:3.4}
 BuildRequires:	rpm >= 4.4.9-56
@@ -118,6 +119,7 @@ Biblioteka statyczna LZMA.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %configure \
@@ -129,6 +131,7 @@ Biblioteka statyczna LZMA.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/etc/env.d,/%{_lib}}
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
