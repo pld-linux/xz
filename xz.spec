@@ -18,7 +18,7 @@ Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
 Version:	5.2.6
-Release:	1
+Release:	2
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
