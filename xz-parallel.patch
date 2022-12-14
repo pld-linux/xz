@@ -4,19 +4,18 @@
  .B 0
  makes
  .B xz
--use as many threads as there are CPU cores on the system.
-+use as many threads as there are CPU cores on the system (default in PLD).
- The actual number of threads can be less than
+-use up to as many threads as the processor(s) on the system support.
++use up to as many threads as the processor(s) on the system support (default in PLD).
+ The actual number of threads can be fewer than
  .I threads
  if the input file is not big enough
---- xz/src/xz/hardware.c~	2011-04-12 12:42:58.000000000 +0200
-+++ xz/src/xz/hardware.c	2011-10-22 23:22:28.306650949 +0200
-@@ -139,6 +139,8 @@
- 		total_ram = (uint64_t)(ASSUME_RAM) * 1024 * 1024;
+--- xz-5.4.0/src/xz/hardware.c.orig	2022-12-14 21:03:50.227052828 +0100
++++ xz-5.4.0/src/xz/hardware.c	2022-12-14 23:25:02.994248765 +0100
+@@ -334,5 +334,7 @@
+ 		memlimit_mt_default = mem_ceiling;
+ #endif
  
- 	// Set the defaults.
 +	hardware_threads_set(0);
- 	hardware_memlimit_set(0, true, true, false);
-+	hardware_memlimit_set(80, true, false, true);
++	hardware_memlimit_set(80, true, false, false, true);
  	return;
  }
