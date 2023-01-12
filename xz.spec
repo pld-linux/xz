@@ -17,13 +17,13 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
-Version:	5.4.0
+Version:	5.4.1
 Release:	1
 Epoch:		1
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	https://tukaani.org/xz/%{name}-%{version}.tar.bz2
-# Source0-md5:	2cc95f33fe0527622177b2bb2f5956c8
+# Source0-md5:	87e3ee2220c62311ae552ee8c5be0c63
 Patch0:		%{name}-parallel.patch
 Patch1:		%{name}-memlimit.patch
 URL:		https://tukaani.org/xz/
@@ -170,10 +170,18 @@ rm -rf $RPM_BUILD_ROOT
 %lang(fr) %{_mandir}/fr/man1/unlzma.1*
 %lang(fr) %{_mandir}/fr/man1/unxz.1*
 %lang(fr) %{_mandir}/fr/man1/xz*.1*
+%lang(ko) %{_mandir}/ko/man1/lz*.1*
+%lang(ko) %{_mandir}/ko/man1/unlzma.1*
+%lang(ko) %{_mandir}/ko/man1/unxz.1*
+%lang(ko) %{_mandir}/ko/man1/xz*.1*
 %lang(ro) %{_mandir}/ro/man1/lz*.1*
 %lang(ro) %{_mandir}/ro/man1/unlzma.1*
 %lang(ro) %{_mandir}/ro/man1/unxz.1*
 %lang(ro) %{_mandir}/ro/man1/xz*.1*
+%lang(uk) %{_mandir}/uk/man1/lz*.1*
+%lang(uk) %{_mandir}/uk/man1/unlzma.1*
+%lang(uk) %{_mandir}/uk/man1/unxz.1*
+%lang(uk) %{_mandir}/uk/man1/xz*.1*
 
 %files libs
 %defattr(644,root,root,755)
