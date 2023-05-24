@@ -90,7 +90,7 @@ Biblioteka współdzielona LZMA.
 Summary:	Header file for LZMA library
 Summary(pl.UTF-8):	Plik nagłówkowy biblioteki LZMA
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 Provides:	lzma-devel = %{epoch}:%{version}-%{release}
 Obsoletes:	lzma-devel < 1:4.999.6
 
