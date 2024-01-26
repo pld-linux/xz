@@ -1,7 +1,8 @@
 #
 # Conditional build:
-%bcond_without	tests	# don't perform make check
-%bcond_without	asm	# ix86 asm optimizations
+%bcond_without	tests		# don't perform make check
+%bcond_without	asm		# ix86 asm optimizations
+%bcond_without	static_libs	# static library
 
 %ifnarch %{ix86}
 # Speed-optimized CRC64 using slicing-by-four algorithm. This uses only i386
@@ -29,7 +30,7 @@ Patch1:		%{name}-memlimit.patch
 URL:		https://tukaani.org/xz/
 %{?with_asm:BuildRequires:	gcc >= 5:3.4}
 BuildRequires:	rpm >= 4.4.9-56
-BuildRequires:	rpmbuild(macros) >= 1.402
+BuildRequires:	rpmbuild(macros) >= 1.527
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Suggests:	mktemp
 Provides:	lzma = %{epoch}:%{version}-%{release}
@@ -121,7 +122,8 @@ Biblioteka statyczna LZMA.
 
 %build
 %configure \
-	%{!?with_asm:--disable-assembler}
+	%{!?with_asm:--disable-assembler} \
+	%{__enable_disable static_libs static}
 %{__make}
 
 %{?with_tests:%{__make} check}
@@ -203,6 +205,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/liblzma.pc
 %{_examplesdir}/%{name}-%{version}
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/liblzma.a
+%endif
