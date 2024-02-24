@@ -21,7 +21,7 @@ Name:		xz
 Version:	5.6.0
 Release:	1
 Epoch:		1
-License:	LGPL v2.1+, helper scripts on GPL v2+
+License:	0BSD, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	https://github.com/tukaani-project/xz/releases/download/v%{version}/%{name}-%{version}.tar.bz2
 # Source0-md5:	6efd76c69f61a87e175c198f30b9dab8
@@ -187,8 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING README THANKS
-%doc doc/*.txt
+%doc AUTHORS COPYING COPYING.0BSD README THANKS doc/*.txt
 %attr(755,root,root) /%{_lib}/liblzma.so.*.*.*
 %attr(755,root,root) %ghost /%{_lib}/liblzma.so.5
 
