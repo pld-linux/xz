@@ -18,13 +18,13 @@
 Summary:	LZMA Encoder/Decoder
 Summary(pl.UTF-8):	Koder/Dekoder LZMA
 Name:		xz
-Version:	5.8.1
+Version:	5.8.2
 Release:	1
 Epoch:		2
 License:	LGPL v2.1+, helper scripts on GPL v2+
 Group:		Applications/Archiving
 Source0:	https://github.com/tukaani-project/xz/releases/download/v%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	a814a04a94c5ce757e2f90e387bd1a5c
+# Source0-md5:	e32589452ef6c300d71b522d2558e948
 URL:		https://tukaani.org/xz/
 %{?with_asm:BuildRequires:	gcc >= 5:3.4}
 BuildRequires:	rpm >= 4.4.9-56
@@ -188,6 +188,10 @@ rm -rf $RPM_BUILD_ROOT
 %lang(sr) %{_mandir}/sr/man1/unlzma.1*
 %lang(sr) %{_mandir}/sr/man1/unxz.1*
 %lang(sr) %{_mandir}/sr/man1/xz*.1*
+%lang(sv) %{_mandir}/sv/man1/lz*.1*
+%lang(sv) %{_mandir}/sv/man1/unlzma.1*
+%lang(sv) %{_mandir}/sv/man1/unxz.1*
+%lang(sv) %{_mandir}/sv/man1/xz*.1*
 %lang(uk) %{_mandir}/uk/man1/lz*.1*
 %lang(uk) %{_mandir}/uk/man1/unlzma.1*
 %lang(uk) %{_mandir}/uk/man1/unxz.1*
